@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 :root {
-    /* Paleta del Flyer */
-    --color-fondo: #F4ECE2;    /* Beige suave */
-    --color-texto: #5A3927;    /* Café oscuro */
-    --color-tierra: #4A2E1F;   /* Montañas oscuras */
+    /* Paleta Oscura Premium */
+    --color-fondo-oscuro: #1A1313;    /* Fondo casi negro, muy oscuro */
+    --color-texto-claro: #E7D7C7;    /* Texto blanco roto/crema */
+    --color-acento-dorado: #C8996C;  /* Dorado elegante para el acento */
+    --color-marron-suave: #302626;   /* Fondo de las cards/módulos */
+    --color-tierra: #4A2E1F;         /* Montañas (dejamos este color por ahora) */
 }
 
 body {
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
+    background-color: var(--color-fondo-oscuro); /* Cambiamos el fondo a oscuro */
+    color: var(--color-texto-claro);
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    font-family: var(--font-sans);
 }

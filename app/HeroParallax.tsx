@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+// NOTA: No hay importación de 'lucide-react'. Usamos SVG directo.
 
 export default function HeroParallax() {
     const ref = useRef(null)
@@ -11,75 +12,89 @@ export default function HeroParallax() {
         offset: ["start start", "end start"]
     })
 
-    // MOVIMIENTO PARALLAX REFINADO
-    // El texto baja un poco más rápido para esconderse tras las dunas
-    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"])
-    // La montaña de atrás se mueve muy poco para dar profundidad
+    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "120%"])
     const mountainBackY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
 
     return (
         <div
             ref={ref}
-            className="relative w-full h-screen overflow-hidden bg-[#F4ECE2] flex flex-col items-center justify-center"
+            className="relative w-full h-[120vh] overflow-hidden bg-[var(--color-fondo)] flex flex-col items-center justify-center"
         >
-            {/* 1. CAPA: TEXTO PRINCIPAL (Va detrás de la duna del frente) */}
-            {/* z-10 para que esté encima del fondo pero detrás de la duna frontal */}
+            {/* 1. CAPA: Placeholders de Nubes y Aves */}
+            <div className="absolute top-0 w-full h-full z-10 pointer-events-none">
+                {/* Placeholder para las aves y nubes que aparecen arriba */}
+                <div className="absolute top-10 right-10 text-xl text-[var(--color-texto-claro)] opacity-50">
+                    [AVES Y NUBES]
+                </div>
+            </div>
+
+            {/* 2. CAPA: TEXTO PRINCIPAL (Posición Ajustada y Fiel al Flyer) */}
             <motion.div
                 style={{ y: textY }}
-                className="relative z-10 flex flex-col items-center text-center mt-[-100px]" // Subimos un poco el texto
+                // ¡POSICIÓN AJUSTADA AQUÍ! Se mueve más arriba en la carga inicial
+                className="relative z-20 flex flex-col items-center text-center mt-[-250px] md:mt-[-180px]"
             >
-                <h1 className="text-[#5A3927] leading-none drop-shadow-sm">
-                    {/* "Cuando" Gigante */}
-                    <span className="block font-serif text-[5rem] md:text-[8rem] lg:text-[10rem]">
-            Cuando
-          </span>
-
-                    {/* Fila de en medio: "estoy" + "Contigo" */}
-                    <div className="flex items-center justify-center gap-2 md:gap-6 -mt-4 md:-mt-10">
-            <span className="font-sans italic font-light text-2xl md:text-4xl mt-2 md:mt-6 text-[#8C6B5D]">
-              estoy
-            </span>
-                        <span className="font-serif font-bold text-[5rem] md:text-[8rem] lg:text-[10rem]">
-              Contigo
-            </span>
+                <h1 className="text-[var(--color-texto)] leading-none drop-shadow-sm">
+                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight">
+                        Cuando
+                    </span>
+                    <div className="flex flex-col items-center justify-center gap-0 -mt-8 md:-mt-12">
+                        <span className="font-sans italic font-light text-2xl md:text-4xl text-[var(--color-texto-claro)]">
+                            estoy
+                        </span>
+                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight">
+                            Contigo
+                        </span>
                     </div>
                 </h1>
 
-                {/* Detalles del evento */}
-                <div className="mt-8 flex flex-col items-center gap-3">
-                    <p className="text-[#5A3927] tracking-[0.3em] uppercase text-xs md:text-sm font-sans font-bold">
-                        Conferencia de Mujeres
+                <div className="mt-8 flex flex-col items-center gap-2">
+                    <p className="text-[var(--color-texto)] tracking-[0.3em] uppercase text-xs md:text-sm font-sans font-bold">
+                        Conferencia de Mujeres • Salmo 73:25-26
                     </p>
 
-                    {/* Pastilla de fecha */}
-                    <div className="bg-[#5A3927] text-[#F4ECE2] px-6 py-2 rounded-full font-sans text-sm md:text-base font-bold shadow-lg">
+                    <div className="bg-[var(--color-texto)] text-[var(--color-fondo)] px-6 py-2 rounded-full font-sans text-sm md:text-base font-bold shadow-lg mt-4">
                         NOV 23 • 3:30 PM
                     </div>
                 </div>
             </motion.div>
 
-            {/* 2. CAPA: MONTAÑA DE ATRÁS (Dibujo SVG) */}
+            {/* 3. CAPA: Figura en el Pico de la Montaña (Placeholder) */}
+            <div className="absolute bottom-[58vh] right-[10vw] z-10 text-[var(--color-texto)]">
+                [FIGURA]
+            </div>
+
+
+            {/* 4. CAPA: MONTAÑA DE ATRÁS (Parallax) */}
             <motion.div
                 style={{ y: mountainBackY }}
                 className="absolute bottom-0 left-0 right-0 z-0 w-full"
             >
-                {/* Una curva suave color café claro */}
                 <svg viewBox="0 0 1440 320" className="w-full h-auto opacity-50">
-                    <path fill="#8C6B5D" fillOpacity="1" d="M0,224L80,213.3C160,203,320,181,480,181.3C640,181,800,203,960,224C1120,245,1280,267,1360,277.3L1440,288L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+                    <path fill="var(--color-tierra)" fillOpacity="1" d="M0,192L80,170.7C160,149,320,107,480,96C640,85,800,107,960,133.3C1120,160,1280,192,1360,208L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
                 </svg>
             </motion.div>
 
-            {/* 3. CAPA: DUNA DEL FRENTE (Dibujo SVG - La más importante) */}
-            {/* z-20 para tapar el texto cuando baje */}
-            <div className="absolute bottom-0 left-0 right-0 z-20 w-full pointer-events-none">
-                {/* Una curva pronunciada color café oscuro */}
+            {/* 5. CAPA: DUNA DEL FRENTE (Estática, Z-30) */}
+            <div className="absolute bottom-0 left-0 right-0 z-30 w-full pointer-events-none">
                 <svg viewBox="0 0 1440 320" className="w-full h-auto">
-                    <path fill="#5A3927" fillOpacity="1" d="M0,160L60,176C120,192,240,224,360,229.3C480,235,600,213,720,197.3C840,181,960,171,1080,181.3C1200,192,1320,224,1380,240L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+                    <path fill="var(--color-tierra)" fillOpacity="1" d="M0,192L80,213.3C160,235,320,277,480,266.7C640,256,800,192,960,186.7C1120,181,1280,235,1360,261.3L1440,288L1440,320L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
                 </svg>
-                {/* Relleno extra por si la pantalla es muy alta */}
-                <div className="bg-[#5A3927] h-20 w-full -mt-1" />
+                <div className="bg-[var(--color-tierra)] h-20 w-full -mt-1" />
             </div>
 
+            {/* 6. INDICADOR DE SCROLL (Solución estable con SVG directo) */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="absolute bottom-10 z-30 text-[var(--color-texto)] flex flex-col items-center opacity-70"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mouse animate-pulse">
+                    <rect x="3" y="10" width="18" height="14" rx="6" />
+                    <path d="M12 2v4" />
+                </svg>
+            </motion.div>
         </div>
     )
 }
