@@ -20,14 +20,14 @@ export default function HeroParallax() {
             ref={ref}
             className="relative w-full h-[120vh] overflow-hidden bg-[var(--color-fondo)]"
         >
-            {/* 1. CAPA: Siluetas de Aves y Nubes (Z-10) */}
+            {/* 1. CAPA: Nubes y Aves (MAXIMA VISIBILIDAD) */}
             <div className="absolute top-0 w-full h-full z-10 pointer-events-none">
 
-                {/* NUBES DIFUSAS (Simulación) */}
-                <div className="absolute top-0 left-0 w-full h-1/3 bg-[var(--color-fondo)] opacity-60" style={{ filter: 'blur(150px)' }}/>
+                {/* NUBES (Simulación visible y difusa) */}
+                <div className="absolute top-0 left-0 w-full h-1/3 bg-white/70" style={{ filter: 'blur(100px)' }}/>
 
-                {/* Siluetas de aves: Tres curvas simples en la esquina derecha */}
-                <div className="absolute top-8 right-8 text-[var(--color-texto)] opacity-60">
+                {/* Siluetas de aves: Color CLARO para que se vean sobre la montaña */}
+                <div className="absolute top-8 right-8 text-[var(--color-texto)] opacity-100">
                     <svg width="60" height="20" viewBox="0 0 60 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 15s4-10 5-10 5 10 5 10" />
                         <path d="M25 18s4-10 5-10 5 10 5 10" />
@@ -37,24 +37,27 @@ export default function HeroParallax() {
                 </div>
             </div>
 
-            {/* 2. CAPA: TEXTO PRINCIPAL (¡FIX FINAL DE COLOR Y POSICIÓN!) */}
+            {/* 2. CAPA: TEXTO PRINCIPAL (¡POSICIÓN Y CONTRASTE CORRECTOS!) */}
             <motion.div
                 style={{ y: textY }}
-                // FIX: top-[15%] ancla el texto en la posición visualmente correcta, fuera de conflicto.
-                className="absolute left-1/2 top-[15%] -translate-x-1/2 z-40 flex flex-col items-center text-center w-full max-w-5xl"
+                // FIX FINAL DE POSICIÓN: top-[22%] - Anclaje estable que despeja la montaña y se ve estético.
+                className="absolute left-1/2 top-[22%] -translate-x-1/2 z-40 flex flex-col items-center text-center w-full max-w-5xl"
             >
-                <h1 className="leading-none drop-shadow-sm">
-                    {/* FIX DE COLOR: 'Cuando' usa el CAFÉ OSCURO principal */}
-                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[var(--color-texto)]">
+                <h1
+                    className="leading-none drop-shadow-sm"
+                    style={{ textShadow: '2px 2px 3px rgba(0,0,0,0.4)' }}
+                >
+                    {/* CUANDO (Dark Brown) */}
+                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[#5A3927]">
                         Cuando
                     </span>
                     <div className="flex flex-col items-center justify-center gap-0 -mt-8 md:-mt-12">
-                        {/* 'estoy' usa la fuente cursiva y color sutil */}
+                        {/* ESTOY (Light Subtle Brown) */}
                         <span className="font-script text-3xl md:text-5xl text-[var(--color-texto-principal-claro)] pb-1 md:pb-2">
                             estoy
                         </span>
-                        {/* 'Contigo' usa el color acentuado (claro) */}
-                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[var(--color-texto-principal-claro)]">
+                        {/* CONTIGO (Dark Brown) */}
+                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[#5A3927]">
                             Contigo
                         </span>
                     </div>

@@ -3,20 +3,18 @@
 @tailwind utilities;
 
 :root {
-    /* Paleta de Colores Final */
-    --color-fondo: #F4ECE2;          /* Beige suave (Fondo de Hero y Ubicación) */
-    --color-fondo-oscuro: #1A1313;    /* Fondo casi negro (Para Countdown y Módulos) */
+    /* Paleta Final (Basada en la imagen) */
+    --color-fondo: #F4ECE2;          /* Beige Suave del Cielo */
+    --color-fondo-oscuro: #1A1313;
 
-    --color-texto: #5A3927;          /* Café Oscuro (Texto principal sobre fondos claros) */
+    --color-texto: #5A3927;          /* Café Oscuro (Título Principal) */
     --color-texto-claro: #E7D7C7;    /* Crema (Texto sobre fondos oscuros) */
-    --color-acento-dorado: #C8996C;  /* Dorado elegante */
-    --color-marron-suave: #302626;   /* Fondo de las cards/módulos */
-    --color-tierra: #4A2E1F;         /* Color de las montañas y dunas */
-    --color-texto-principal-claro: #9F7E69; /* Tono más claro del título 'Contigo' */
+    --color-acento-dorado: #C8996C;
+    --color-tierra: #4A2E1F;         /* Color de las montañas */
+    --color-texto-principal-claro: #9F7E69; /* Color sutil de 'estoy' */
 }
 
 body {
-    /* El body usa el color CLARO por defecto, y cada sección se pinta sola */
     background-color: var(--color-fondo);
     color: var(--color-texto);
     margin: 0;
