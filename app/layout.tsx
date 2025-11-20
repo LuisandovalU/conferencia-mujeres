@@ -1,10 +1,8 @@
-// AJUSTE: Necesitas agregar una fuente cursiva para el 'estoy'
-// Reemplaza la importación del Playfair con la que sea más Script. Usaremos Dancing Script como proxy.
 import type { Metadata } from "next";
-import { Playfair_Display, Montserrat, Dancing_Script } from "next/font/google"; // Añade Dancing_Script
+import { Playfair_Display, Montserrat, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
-// Fuentes Configuradas
+// Configuramos la fuente elegante (Títulos)
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 const dancing = Dancing_Script({ subsets: ["latin"], variable: "--font-script" }); // Nueva fuente cursiva
@@ -21,7 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="es">
-        {/* Añadimos la variable de la nueva fuente al body */}
+        {/* Aplicamos todas las variables de fuentes al body */}
         <body className={`${playfair.variable} ${montserrat.variable} ${dancing.variable} font-sans antialiased`}>
         {children}
         </body>

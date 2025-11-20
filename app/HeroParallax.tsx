@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-// NOTA: No hay importación de 'lucide-react'. Usamos SVG directo.
+// NOTA: El indicador de scroll usa SVG directo.
 
 export default function HeroParallax() {
     const ref = useRef(null)
@@ -18,31 +18,43 @@ export default function HeroParallax() {
     return (
         <div
             ref={ref}
-            className="relative w-full h-[120vh] overflow-hidden bg-[var(--color-fondo)] flex flex-col items-center justify-center"
+            className="relative w-full h-[120vh] overflow-hidden bg-[var(--color-fondo)]"
         >
-            {/* 1. CAPA: Placeholders de Nubes y Aves */}
+            {/* 1. CAPA: Siluetas de Aves y Nubes (Z-10) */}
             <div className="absolute top-0 w-full h-full z-10 pointer-events-none">
-                {/* Placeholder para las aves y nubes que aparecen arriba */}
-                <div className="absolute top-10 right-10 text-xl text-[var(--color-texto-claro)] opacity-50">
-                    [AVES Y NUBES]
+
+                {/* NUBES DIFUSAS (Simulación) */}
+                <div className="absolute top-0 left-0 w-full h-1/3 bg-[var(--color-fondo)] opacity-60" style={{ filter: 'blur(150px)' }}/>
+
+                {/* Siluetas de aves: Tres curvas simples en la esquina derecha */}
+                <div className="absolute top-8 right-8 text-[var(--color-texto)] opacity-60">
+                    <svg width="60" height="20" viewBox="0 0 60 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 15s4-10 5-10 5 10 5 10" />
+                        <path d="M25 18s4-10 5-10 5 10 5 10" />
+                        <path d="M45 12s4-10 5-10 5 10 5 10" />
+                        <path d="M65 20s6-10 7-10 6 10 6 10" />
+                    </svg>
                 </div>
             </div>
 
-            {/* 2. CAPA: TEXTO PRINCIPAL (Posición Ajustada y Fiel al Flyer) */}
+            {/* 2. CAPA: TEXTO PRINCIPAL (¡FIX FINAL DE COLOR Y POSICIÓN!) */}
             <motion.div
                 style={{ y: textY }}
-                // ¡POSICIÓN AJUSTADA AQUÍ! Se mueve más arriba en la carga inicial
-                className="relative z-20 flex flex-col items-center text-center mt-[-250px] md:mt-[-180px]"
+                // FIX: top-[15%] ancla el texto en la posición visualmente correcta, fuera de conflicto.
+                className="absolute left-1/2 top-[15%] -translate-x-1/2 z-40 flex flex-col items-center text-center w-full max-w-5xl"
             >
-                <h1 className="text-[var(--color-texto)] leading-none drop-shadow-sm">
-                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight">
+                <h1 className="leading-none drop-shadow-sm">
+                    {/* FIX DE COLOR: 'Cuando' usa el CAFÉ OSCURO principal */}
+                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[var(--color-texto)]">
                         Cuando
                     </span>
                     <div className="flex flex-col items-center justify-center gap-0 -mt-8 md:-mt-12">
-                        <span className="font-sans italic font-light text-2xl md:text-4xl text-[var(--color-texto-claro)]">
+                        {/* 'estoy' usa la fuente cursiva y color sutil */}
+                        <span className="font-script text-3xl md:text-5xl text-[var(--color-texto-principal-claro)] pb-1 md:pb-2">
                             estoy
                         </span>
-                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight">
+                        {/* 'Contigo' usa el color acentuado (claro) */}
+                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[var(--color-texto-principal-claro)]">
                             Contigo
                         </span>
                     </div>
@@ -83,7 +95,7 @@ export default function HeroParallax() {
                 <div className="bg-[var(--color-tierra)] h-20 w-full -mt-1" />
             </div>
 
-            {/* 6. INDICADOR DE SCROLL (Solución estable con SVG directo) */}
+            {/* 6. INDICADOR DE SCROLL */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

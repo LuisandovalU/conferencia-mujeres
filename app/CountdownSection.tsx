@@ -1,9 +1,9 @@
 'use client'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react';
-import ExperienceModules from './ExperienceModules'; // <--- NUEVO IMPORT
+import ExperienceModules from './ExperienceModules';
 
-// Componente para la pastilla del tiempo
+// Componente para la pastilla del tiempo (Mockup de diseño)
 const TimePill = ({ time, label }: { time: string; label: string }) => (
     <div className="bg-[var(--color-marron-suave)] p-4 md:p-6 rounded-xl shadow-2xl w-20 md:w-32 text-center">
         <p className="text-4xl md:text-6xl font-serif text-[var(--color-acento-dorado)] font-bold">
@@ -20,12 +20,12 @@ export default function CountdownSection() {
     const isInView = useInView(ref, { once: true, amount: 0.3 });
 
     return (
+        // CAMBIO: Se pinta con el fondo OSCURO
         <section
             ref={ref}
             className="relative z-50 bg-[var(--color-fondo-oscuro)] pt-20 pb-10 px-4 min-h-screen border-t border-[var(--color-marron-suave)]"
         >
             <div className="max-w-6xl mx-auto">
-                {/* Título de la sección */}
                 <motion.h2
                     initial={{ opacity: 0, y: 50 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -43,7 +43,7 @@ export default function CountdownSection() {
                     <TimePill time="00" label="SEGUNDOS" />
                 </div>
 
-                {/* Badge de Evento Exclusivo y Foto Placeholder (simplificado) */}
+                {/* Botón de Reserva y Placeholder de Foto */}
                 <div className="flex flex-col md:flex-row items-center justify-center gap-12 mt-16 mb-24">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -60,7 +60,7 @@ export default function CountdownSection() {
                     </motion.div>
                 </div>
 
-                {/* 3. AHORA MOSTRAMOS LOS MÓDULOS DE EXPERIENCIA */}
+                {/* MÓDULOS DE EXPERIENCIA */}
                 <ExperienceModules />
 
             </div>

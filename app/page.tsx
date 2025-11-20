@@ -1,20 +1,21 @@
 import HeroParallax from './HeroParallax'
-import CountdownSection from './CountdownSection' // <--- AÑADE ESTA LÍNEA
+import CountdownSection from './CountdownSection'
+import LocationSection from './LocationSection'
 
 export default function Home() {
     return (
-        <main className="bg-[var(--color-fondo-oscuro)] min-h-[300vh]"> {/* Ajusté el fondo principal */}
+        // El fondo principal no define color para que el body (claro) se vea por defecto
+        <main className="min-h-[300vh]">
 
-            {/* 1. SECCIÓN HERO */}
+            {/* 1. SECCIÓN HERO (Claro) */}
             <HeroParallax />
 
-            {/* 2. SECCIÓN CUENTA REGRESIVA Y VALOR */}
+            {/* 2. SECCIÓN CUENTA REGRESIVA Y MÓDULOS (Oscuro) */}
             <CountdownSection />
 
-            {/* Contenido extra de prueba */}
-            <section className="h-[50vh] bg-[var(--color-fondo-oscuro)] border-t border-[var(--color-marron-suave)]">
-                <h2 className="text-center pt-20 text-3xl">Aquí irá la sección de Ubicación</h2>
-            </section>
+            {/* 3. SECCIÓN UBICACIÓN Y MAPA (Claro) */}
+            <LocationSection />
+
         </main>
     )
 }
