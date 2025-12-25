@@ -1,12 +1,11 @@
-import HeroParallax from './HeroParallax'
+// app/page.tsx
+import HeroParallax from './HeroParallax' // FIX: Sin llaves { }
 import CountdownSection from './CountdownSection'
 import LocationSection from './LocationSection'
 
 export default function Home() {
     return (
-        // El fondo principal no define color para que el body (claro) se vea por defecto
         <main className="min-h-[300vh]">
-
             {/* 1. SECCIÓN HERO (Claro) */}
             <HeroParallax />
 
@@ -15,7 +14,6 @@ export default function Home() {
 
             {/* 3. SECCIÓN UBICACIÓN Y MAPA (Claro) */}
             <LocationSection />
-
         </main>
     )
 }

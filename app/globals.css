@@ -3,22 +3,15 @@
 @tailwind utilities;
 
 :root {
-    /* Paleta Final (Basada en la imagen) */
-    --color-fondo: #F4ECE2;          /* Beige Suave del Cielo */
-    --color-fondo-oscuro: #1A1313;
-
-    --color-texto: #5A3927;          /* Café Oscuro (Título Principal) */
-    --color-texto-claro: #E7D7C7;    /* Crema (Texto sobre fondos oscuros) */
-    --color-acento-dorado: #C8996C;
-    --color-tierra: #4A2E1F;         /* Color de las montañas */
-    --color-texto-principal-claro: #9F7E69; /* Color sutil de 'estoy' */
+    --color-fondo: #F4ECE2;          /* El beige exacto del cielo */
+    --color-texto-principal: #5A3927; /* El café oscuro de "Cuando" */
+    --color-texto-secundario: #9F7E69;/* El café suave de "estoy" */
+    --color-tierra: #4A2E1F;         /* El color de las montañas */
 }
 
 body {
     background-color: var(--color-fondo);
-    color: var(--color-texto);
+    color: var(--color-texto-principal);
     margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    font-family: var(--font-sans);
+    font-family: 'serif'; /* Asegúrate de tener una fuente Serif elegante */
 }

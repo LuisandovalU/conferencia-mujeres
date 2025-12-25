@@ -52,7 +52,6 @@ export default function CountdownSection() {
                         className="relative bg-[var(--color-marron-suave)] p-6 rounded-full inline-block shadow-2xl"
                     >
                          <span className="font-sans tracking-widest uppercase text-lg text-[var(--color-acento-dorado)]">
-                            RESERVAR MI LUGAR
                          </span>
                         <span className="absolute top-0 right-0 px-2 py-1 bg-red-600 text-white text-xs rounded-full transform translate-x-1/2 -translate-y-1/2">
                             Exclusivo

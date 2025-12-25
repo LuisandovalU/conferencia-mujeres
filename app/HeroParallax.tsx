@@ -1,115 +1,113 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-// NOTA: El indicador de scroll usa SVG directo.
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger)
+}
 
 export default function HeroParallax() {
-    const ref = useRef(null)
+    const container = useRef(null)
 
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"]
-    })
+    useGSAP(() => {
+        // 1. Animación de las Gaviotas (Vuelo suave)
+        gsap.to(".gaviota", {
+            y: "random(-15, 15)",
+            x: "random(-10, 10)",
+            duration: "random(2, 4)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            stagger: 0.2
+        })
 
-    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "120%"])
-    const mountainBackY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+        // 2. Parallax: El texto se oculta detrás de las montañas
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: 1.5 // Suaviza el movimiento
+            }
+        })
+
+        tl.to(".header-content", { y: -350, opacity: 0 }, 0)
+            .to(".m-lejos", { y: 120 }, 0)
+            .to(".m-medio", { y: 60 }, 0)
+            .to(".m-frente", { y: 0 }, 0)
+    }, { scope: container })
 
     return (
-        <div
-            ref={ref}
-            className="relative w-full h-[120vh] overflow-hidden bg-[var(--color-fondo)]"
-        >
-            {/* 1. CAPA: Nubes y Aves (MAXIMA VISIBILIDAD) */}
-            <div className="absolute top-0 w-full h-full z-10 pointer-events-none">
+        <section ref={container} className="relative w-full h-screen overflow-hidden bg-[#F4ECE2] flex flex-col items-center">
 
-                {/* NUBES (Simulación visible y difusa) */}
-                <div className="absolute top-0 left-0 w-full h-1/3 bg-white/70" style={{ filter: 'blur(100px)' }}/>
+            {/* CAPA 0: CIELO Y GAVIOTAS */}
+            <div className="absolute top-0 w-full h-full pointer-events-none z-0">
+                <div className="absolute top-0 left-0 w-full h-1/2 bg-white/40 blur-[120px]" />
 
-                {/* Siluetas de aves: Color CLARO para que se vean sobre la montaña */}
-                <div className="absolute top-8 right-8 text-[var(--color-texto)] opacity-100">
-                    <svg width="60" height="20" viewBox="0 0 60 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 15s4-10 5-10 5 10 5 10" />
-                        <path d="M25 18s4-10 5-10 5 10 5 10" />
-                        <path d="M45 12s4-10 5-10 5 10 5 10" />
-                        <path d="M65 20s6-10 7-10 6 10 6 10" />
-                    </svg>
+                {/* Gaviotas en formación (Estilo gaviota real) */}
+                <div className="absolute top-32 right-[15%] flex gap-20 opacity-30">
+                    {[1, 2, 3].map((i) => (
+                        <svg key={i} className="gaviota" width="45" height="15" viewBox="0 0 60 20" fill="none" stroke="#5A3927" strokeWidth="2.5">
+                            <path d="M2 18c12-18 20-5 28 0 8-5 16-18 28 0" strokeLinecap="round"/>
+                        </svg>
+                    ))}
                 </div>
             </div>
 
-            {/* 2. CAPA: TEXTO PRINCIPAL (¡POSICIÓN Y CONTRASTE CORRECTOS!) */}
-            <motion.div
-                style={{ y: textY }}
-                // FIX FINAL DE POSICIÓN: top-[22%] - Anclaje estable que despeja la montaña y se ve estético.
-                className="absolute left-1/2 top-[22%] -translate-x-1/2 z-40 flex flex-col items-center text-center w-full max-w-5xl"
-            >
-                <h1
-                    className="leading-none drop-shadow-sm"
-                    style={{ textShadow: '2px 2px 3px rgba(0,0,0,0.4)' }}
-                >
-                    {/* CUANDO (Dark Brown) */}
-                    <span className="block font-serif text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[#5A3927]">
+            {/* CAPA 10: TEXTO (Se ocultará detrás de Z-20+) */}
+            <div className="header-content relative z-10 mt-[18vh] text-center px-4 select-none">
+                <span className="block text-xs tracking-[0.8em] uppercase mb-12 text-[#9F7E69] font-bold">
+                    Conferencia de Mujeres
+                </span>
+
+                <h1 className="leading-[0.8] italic">
+                    <span className="block font-serif text-[clamp(5rem,18vw,14rem)] text-[#5A3927] tracking-tighter">
                         Cuando
                     </span>
-                    <div className="flex flex-col items-center justify-center gap-0 -mt-8 md:-mt-12">
-                        {/* ESTOY (Light Subtle Brown) */}
-                        <span className="font-script text-3xl md:text-5xl text-[var(--color-texto-principal-claro)] pb-1 md:pb-2">
-                            estoy
-                        </span>
-                        {/* CONTIGO (Dark Brown) */}
-                        <span className="font-serif font-bold text-[6rem] md:text-[10rem] lg:text-[12rem] tracking-tight text-[#5A3927]">
+                    <div className="flex items-center justify-center -mt-6 md:-mt-10 gap-4 md:gap-10">
+                        <span className="font-script text-3xl md:text-6xl text-[#9F7E69]">estoy</span>
+                        <span className="font-serif font-bold text-[clamp(5rem,18vw,14rem)] text-[#5A3927] tracking-tighter">
                             Contigo
                         </span>
                     </div>
                 </h1>
 
-                <div className="mt-8 flex flex-col items-center gap-2">
-                    <p className="text-[var(--color-texto)] tracking-[0.3em] uppercase text-xs md:text-sm font-sans font-bold">
-                        Conferencia de Mujeres • Salmo 73:25-26
-                    </p>
-
-                    <div className="bg-[var(--color-texto)] text-[var(--color-fondo)] px-6 py-2 rounded-full font-sans text-sm md:text-base font-bold shadow-lg mt-4">
+                <div className="mt-12 flex flex-col items-center gap-6">
+                    <p className="text-[#5A3927] tracking-[0.4em] font-bold opacity-50 text-xs">SALMO 73:25-26</p>
+                    <div className="bg-[#5A3927] text-[#F4ECE2] px-10 py-3 rounded-full text-xs font-bold tracking-widest shadow-xl">
                         NOV 23 • 3:30 PM
                     </div>
                 </div>
-            </motion.div>
-
-            {/* 3. CAPA: Figura en el Pico de la Montaña (Placeholder) */}
-            <div className="absolute bottom-[58vh] right-[10vw] z-10 text-[var(--color-texto)]">
-                [FIGURA]
             </div>
 
+            {/* CAPA: 3 MONTAÑAS (Z-index superior al texto) */}
 
-            {/* 4. CAPA: MONTAÑA DE ATRÁS (Parallax) */}
-            <motion.div
-                style={{ y: mountainBackY }}
-                className="absolute bottom-0 left-0 right-0 z-0 w-full"
-            >
-                <svg viewBox="0 0 1440 320" className="w-full h-auto opacity-50">
-                    <path fill="var(--color-tierra)" fillOpacity="1" d="M0,192L80,170.7C160,149,320,107,480,96C640,85,800,107,960,133.3C1120,160,1280,192,1360,208L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+            {/* 1. Montaña Lejana (z-20) */}
+            <div className="m-lejos absolute bottom-[-5%] w-full z-20">
+                <svg viewBox="0 0 1440 320" className="w-full h-auto opacity-30">
+                    <path fill="#5A3927" d="M0,160L160,192C320,224,640,288,960,256C1280,224,1360,96,1440,32V320H0Z" />
                 </svg>
-            </motion.div>
-
-            {/* 5. CAPA: DUNA DEL FRENTE (Estática, Z-30) */}
-            <div className="absolute bottom-0 left-0 right-0 z-30 w-full pointer-events-none">
-                <svg viewBox="0 0 1440 320" className="w-full h-auto">
-                    <path fill="var(--color-tierra)" fillOpacity="1" d="M0,192L80,213.3C160,235,320,277,480,266.7C640,256,800,192,960,186.7C1120,181,1280,235,1360,261.3L1440,288L1440,320L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-                </svg>
-                <div className="bg-[var(--color-tierra)] h-20 w-full -mt-1" />
             </div>
 
-            {/* 6. INDICADOR DE SCROLL */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                className="absolute bottom-10 z-30 text-[var(--color-texto)] flex flex-col items-center opacity-70"
-            >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mouse animate-pulse">
-                    <rect x="3" y="10" width="18" height="14" rx="6" />
-                    <path d="M12 2v4" />
+            {/* 2. Montaña Media (z-30) */}
+            <div className="m-medio absolute bottom-[-8%] w-full z-30">
+                <svg viewBox="0 0 1440 320" className="w-full h-auto opacity-70">
+                    <path fill="#4A2E1F" d="M0,224L240,192C480,160,720,160,960,192C1200,224,1320,288,1440,320V320H0Z" />
                 </svg>
-            </motion.div>
-        </div>
+            </div>
+
+            {/* 3. Montaña Frente (z-40 - La que tapa todo) */}
+            <div className="m-frente absolute bottom-0 w-full z-40">
+                <svg viewBox="0 0 1440 320" className="w-full h-auto drop-shadow-[-20px_-15px_30px_rgba(0,0,0,0.1)]">
+                    <path fill="#2D1B12" d="M0,288L180,256C360,224,720,160,1080,224C1260,256,1350,288,1440,320V320H0Z" />
+                </svg>
+                {/* Relleno para el scroll */}
+                <div className="bg-[#2D1B12] h-[50vh] w-full -mt-1" />
+            </div>
+
+        </section>
     )
 }
