@@ -1,440 +1,503 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
 import {
-    Instagram, Mail, ArrowRight, Camera, Coffee, ShoppingBag,
-    Music, ShieldCheck, Twitter, X, Play, MapPin
+    ArrowDownRight, Sparkles, Coffee, Music, Mic,
+    ShoppingBag, Camera, Users, ArrowLeft, ArrowRight,
+    Quote, ChevronDown, ShieldCheck, Ticket, Check,
+    Instagram, Facebook
 } from "lucide-react";
 
 export default function Home() {
-    // --- REFS PARA OPTIMIZACIÓN (Performance nativa) ---
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const navRef = useRef<HTMLElement>(null);
-    const navBgRef = useRef<HTMLDivElement>(null);
-    const socialProofRef = useRef<HTMLDivElement>(null);
-    const modalRef = useRef<HTMLDialogElement>(null);
-    const [modalContent, setModalContent] = useState({ name: '', role: '', img: '' });
-
-    // Datos simulados para la notificación en vivo
-    const fakeProofData = [
-        { name: "Sofía acaba de reservar.", time: "Hace 2 min", img: "https://randomuser.me/api/portraits/women/44.jpg" },
-        { name: "Camila se unió desde MX.", time: "Hace 5 min", img: "https://randomuser.me/api/portraits/women/12.jpg" },
-        { name: "Luisa adquirió su entrada.", time: "Hace 10 min", img: "https://randomuser.me/api/portraits/women/65.jpg" },
-        { name: "Ana María confirmó.", time: "Hace 1 min", img: "https://randomuser.me/api/portraits/women/33.jpg" }
-    ];
-
-    useEffect(() => {
-        // 1. LÓGICA DEL CURSOR (Sin React State para evitar lag en mousemove)
-        const moveCursor = (e: MouseEvent) => {
-            if (cursorRef.current) {
-                cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-            }
-        };
-
-        // Efecto Hover Magnético en enlaces, botones y tarjetas
-        const addHoverEffect = () => {
-            const triggers = document.querySelectorAll('a, button, .hover-trigger');
-            triggers.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    if (cursorRef.current) {
-                        cursorRef.current.style.width = '60px';
-                        cursorRef.current.style.height = '60px';
-                        cursorRef.current.style.backgroundColor = '#fff'; // Inversión visual con mix-blend-mode
-                    }
-                });
-                el.addEventListener('mouseleave', () => {
-                    if (cursorRef.current) {
-                        cursorRef.current.style.width = '16px';
-                        cursorRef.current.style.height = '16px';
-                        cursorRef.current.style.backgroundColor = '#C5A67C'; // Gold original
-                    }
-                });
-            });
-        };
-
-        // 2. LÓGICA DE SCROLL (Parallax + Nav Inteligente + Reveal)
-        let lastScroll = 0;
-        const layers = document.querySelectorAll('.parallax-layer') as NodeListOf<HTMLElement>;
-
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-
-            // Parallax: Mueve las capas SVG a diferentes velocidades
-            requestAnimationFrame(() => {
-                layers.forEach(layer => {
-                    const speed = parseFloat(layer.getAttribute('data-speed') || '0');
-                    layer.style.transform = `translateY(-${scrollY * speed}px)`;
-                });
-            });
-
-            // Smart Nav: Se esconde al bajar, aparece al subir con efecto vidrio
-            if (navRef.current && navBgRef.current) {
-                if (scrollY > lastScroll && scrollY > 100) {
-                    navRef.current.style.transform = 'translateY(-100%)';
-                } else {
-                    navRef.current.style.transform = 'translateY(0)';
-                }
-
-                if (scrollY > 50) {
-                    navBgRef.current.classList.remove('opacity-0');
-                } else {
-                    navBgRef.current.classList.add('opacity-0');
-                }
-            }
-
-            lastScroll = scrollY;
-        };
-
-        // 3. REVEAL OBSERVER (Aparición estilo Apple)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-        // Inicialización después del montaje
-        setTimeout(() => {
-            document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
-            addHoverEffect();
-        }, 100);
-
-        // 4. SOCIAL PROOF LOOP
-        let proofIndex = 0;
-        const proofInterval = setInterval(() => {
-            if(!socialProofRef.current) return;
-
-            const data = fakeProofData[proofIndex];
-            const imgEl = document.getElementById('sp-img') as HTMLImageElement;
-            const textEl = document.getElementById('sp-text');
-            const timeEl = document.getElementById('sp-time');
-
-            if(imgEl && textEl && timeEl) {
-                imgEl.src = data.img;
-                textEl.innerText = data.name;
-                timeEl.innerText = data.time;
-            }
-
-            // Animar entrada
-            socialProofRef.current.classList.remove('toast-exit');
-            socialProofRef.current.classList.add('toast-active');
-
-            // Animar salida después de 5s
-            setTimeout(() => {
-                if(socialProofRef.current) {
-                    socialProofRef.current.classList.remove('toast-active');
-                    socialProofRef.current.classList.add('toast-exit');
-                }
-            }, 5000);
-
-            proofIndex = (proofIndex + 1) % fakeProofData.length;
-        }, 8000); // Cada 8 segundos
-
-        window.addEventListener("mousemove", moveCursor);
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("mousemove", moveCursor);
-            window.removeEventListener("scroll", handleScroll);
-            clearInterval(proofInterval);
-        };
-    }, []);
-
-    // Modal Functions
-    const openModal = (name: string, role: string, img: string) => {
-        setModalContent({ name, role, img });
-        modalRef.current?.showModal();
-        document.body.style.overflow = 'hidden';
-    };
-
-    const closeModal = () => {
-        modalRef.current?.close();
-        document.body.style.overflow = '';
-    };
-
     return (
-        <main className="relative bg-noise bg-sand-50 text-earth-900 font-sans selection:bg-earth-900 selection:text-sand-50">
+        <main className="relative bg-sand-50 text-earth-900 font-sans selection:bg-earth-300 selection:text-earth-900">
 
-            {/* 1. CURSOR PERSONALIZADO */}
-            <div
-                ref={cursorRef}
-                id="custom-cursor"
-                className="fixed top-0 left-0 w-4 h-4 bg-gold-500 rounded-full -translate-x-1/2 -translate-y-1/2 hidden md:block pointer-events-none z-[9999]"
-            />
+            {/* Textura de ruido global */}
+            <div className="fixed inset-0 bg-noise opacity-60 pointer-events-none z-[60] mix-blend-multiply"></div>
 
-            {/* 2. NOTIFICACIÓN FLOTANTE */}
-            <div
-                ref={socialProofRef}
-                id="social-proof"
-                className="fixed bottom-6 left-6 z-40 bg-white/90 backdrop-blur border border-earth-100 p-4 rounded-xl shadow-2xl flex items-center gap-4 transition-all duration-700 toast-exit max-w-[300px]"
-            >
-                <div className="relative">
-                    <div className="w-10 h-10 rounded-full overflow-hidden bg-sand-200">
-                        <img id="sp-img" src={fakeProofData[0].img} className="w-full h-full object-cover" alt="User" />
+            {/* Navegación */}
+            <nav className="fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-sand-50/80 border-b border-earth-900/5">
+                <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+                    <a href="#" className="font-serif text-2xl tracking-tighter text-earth-900 hover:opacity-70 transition-opacity">CEC<span className="text-earth-500">.</span></a>
+
+                    <div className="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-earth-800/80">
+                        <a href="#concepto" className="hover:text-earth-600 transition-colors">Concepto</a>
+                        <a href="#speakers" className="hover:text-earth-600 transition-colors">Speakers</a>
+                        <a href="#agenda" className="hover:text-earth-600 transition-colors">Agenda</a>
+                        <a href="#experiencia" className="hover:text-earth-600 transition-colors">Experiencia</a>
+                        <a href="#faq" className="hover:text-earth-600 transition-colors">FAQ</a>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></div>
-                </div>
-                <div>
-                    <p id="sp-text" className="text-xs font-medium text-earth-900 leading-tight">{fakeProofData[0].name}</p>
-                    <p id="sp-time" className="text-[10px] text-earth-500 font-mono mt-0.5">{fakeProofData[0].time}</p>
-                </div>
-            </div>
 
-            {/* 3. NAVEGACIÓN INTELIGENTE */}
-            <nav ref={navRef} className="fixed top-0 w-full z-50 transition-all duration-500 transform translate-y-0">
-                <div ref={navBgRef} className="absolute inset-0 bg-sand-50/80 backdrop-blur-md border-b border-earth-900/5 opacity-0 transition-opacity duration-500"></div>
-                <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative z-10">
-                    <div className="font-serif text-3xl tracking-tighter text-earth-900 hover-trigger cursor-pointer mix-blend-multiply">CEC.</div>
-                    <div className="hidden md:flex items-center space-x-10 text-sm font-medium tracking-wide">
-                        {['Speakers', 'Experiencia', 'Galería'].map((item) => (
-                            <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-earth-600 transition-colors hover-trigger relative group">
-                                {item}
-                                <span className="absolute -bottom-1 left-0 w-0 h-px bg-earth-900 transition-all duration-300 group-hover:w-full"></span>
-                            </a>
-                        ))}
-                        <a href="#registro" className="hover-trigger bg-earth-900 text-sand-50 px-6 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 hover:bg-earth-800 hover:scale-105 shadow-lg shadow-earth-900/10 hover:text-white">
-                            Reservar Cupo
-                        </a>
-                    </div>
+                    <a href="#registro" className="hidden md:inline-flex bg-earth-900 text-sand-50 px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 hover:bg-earth-800 hover:shadow-lg hover:shadow-earth-900/10 hover:-translate-y-0.5">
+                        Reservar Lugar
+                    </a>
                 </div>
             </nav>
 
-            {/* 4. HERO SECTION (Parallax Dunas) */}
-            <header className="h-[110vh] flex flex-col items-center justify-center relative overflow-hidden bg-sand-100">
-                <div className="relative z-20 text-center px-4 -mt-32 mix-blend-multiply parallax-layer" data-speed="0.2">
-                    <div className="inline-flex items-center gap-3 mb-6 animate-fade-in-up">
-                        <span className="w-12 h-[1px] bg-earth-600"></span>
-                        <p className="text-earth-600 text-xs tracking-[0.3em] uppercase font-semibold">Conferencia 2025</p>
-                        <span className="w-12 h-[1px] bg-earth-600"></span>
+            {/* Hero Section */}
+            <header className="min-h-screen flex flex-col pt-20 relative overflow-hidden justify-center items-center">
+                {/* Elementos decorativos de fondo */}
+                <div className="absolute top-1/4 -left-20 w-64 h-64 bg-earth-300/20 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-earth-400/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+                <div className="relative z-10 text-center px-4 max-w-5xl mx-auto space-y-8 -mt-20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-earth-900/10 bg-white/30 backdrop-blur-sm animate-fade-up">
+                        <span className="w-1.5 h-1.5 rounded-full bg-earth-600 animate-pulse"></span>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-earth-600 font-semibold">Conferencia 2025</span>
                     </div>
 
-                    <h1 className="font-serif text-[13vw] md:text-[8rem] leading-[0.85] text-earth-900 tracking-tighter mb-4 reveal-item">
+                    <h1 className="font-serif text-6xl md:text-8xl lg:text-[9.5rem] leading-[0.85] text-earth-900 tracking-tighter text-balance animate-fade-up [animation-delay:100ms]">
                         Cuando estoy <br />
-                        <span className="italic font-light text-earth-600 relative inline-block">
-              contigo
-              <svg className="absolute w-full h-3 -bottom-1 left-0 text-gold-500 opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
-            </span>
+                        <span className="italic text-earth-500 relative inline-block">
+                            contigo
+                            <svg className="absolute w-full h-3 -bottom-1 md:-bottom-4 left-0 text-earth-300 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 10 Q 50 20 100 10" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
+                        </span>
                     </h1>
 
-                    <p className="text-earth-800/60 text-lg md:text-xl font-light tracking-wide max-w-md mx-auto reveal-item" style={{ transitionDelay: '100ms' }}>
-                        Un refugio intencional para el alma en medio del ruido cotidiano.
+                    <p className="text-earth-800/70 md:text-xl text-lg font-light tracking-wide max-w-lg mx-auto animate-fade-up [animation-delay:200ms]">
+                        Un refugio en el desierto para reencontrarte con lo esencial.
                     </p>
+
+                    {/* Countdown Minimalista */}
+                    <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-6 animate-fade-up [animation-delay:300ms]">
+                        <div className="text-center group cursor-default">
+                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">23</span>
+                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Días</span>
+                        </div>
+                        <div className="text-center group cursor-default">
+                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">08</span>
+                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Hrs</span>
+                        </div>
+                        <div className="text-center group cursor-default">
+                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">45</span>
+                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Min</span>
+                        </div>
+                        <div className="text-center group cursor-default">
+                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">12</span>
+                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Seg</span>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Capas SVG Animadas */}
-                <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none z-10">
-                    {/* Duna Fondo */}
-                    <div className="absolute bottom-0 w-full parallax-layer origin-bottom" data-speed="0.1">
-                        <svg className="w-full h-[50vh]" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                            <path fill="#D5C4B4" fillOpacity="0.6" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,160C1248,139,1344,150,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                        </svg>
-                    </div>
-                    {/* Duna Media */}
-                    <div className="absolute bottom-0 w-full parallax-layer origin-bottom" data-speed="0.25">
-                        <svg className="w-full h-[40vh]" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                            <path fill="#8C705F" fillOpacity="0.8" d="M0,256L60,240C120,224,240,192,360,192C480,192,600,224,720,240C840,256,960,256,1080,229.3C1200,203,1320,149,1380,122.7L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-                        </svg>
-                    </div>
-                    {/* Duna Frente */}
-                    <div className="absolute -bottom-1 w-full parallax-layer origin-bottom" data-speed="0.4">
-                        <svg className="w-full h-[30vh]" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                            <path fill="#2E221E" fillOpacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                        </svg>
-                    </div>
+                {/* Dunas SVG Integrado */}
+                <div className="w-full absolute bottom-0 left-0 pointer-events-none z-0">
+                    <svg className="w-full h-auto min-h-[150px]" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#E6DDD3" fillOpacity="0.5" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        <path fill="#ffffff" fillOpacity="1" d="M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,234.7C672,256,768,288,864,277.3C960,267,1056,213,1152,202.7C1248,192,1344,224,1392,240L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    </svg>
                 </div>
             </header>
 
-            {/* 5. COUNTDOWN SECTION */}
-            <section className="relative z-30 -mt-24 px-6 reveal-item">
-                <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-full shadow-2xl flex justify-around items-center text-center">
-                    {[{v:23, l:'Días'}, {v:8, l:'Horas'}, {v:45, l:'Min'}, {v:12, l:'Seg'}].map((t, i) => (
-                        <div key={i}>
-                            <span className="block font-serif text-3xl md:text-5xl text-earth-900">{t.v}</span>
-                            <span className="text-[10px] uppercase tracking-widest text-earth-600">{t.l}</span>
+            {/* Concepto Split */}
+            <section id="concepto" className="py-24 bg-white relative">
+                <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                    <div className="space-y-8 order-2 md:order-1">
+                        <div className="inline-flex items-center gap-3">
+                            <span className="h-[1px] w-12 bg-earth-400"></span>
+                            <span className="text-earth-500 font-semibold text-xs tracking-widest uppercase">La Visión</span>
                         </div>
-                    ))}
+                        <h2 className="font-serif text-5xl md:text-6xl text-earth-900 leading-[1.1]">
+                            Despojar el ruido,<br />encontrar <span className="italic text-earth-500">la paz</span>
+                        </h2>
+                        <div className="space-y-6 text-earth-800/70 font-light text-lg leading-relaxed">
+                            <p>Vivimos saturadas de información y expectativas. "Cuando estoy contigo" no es una conferencia para hacer más, sino un espacio para ser. </p>
+                            <p>Diseñamos cada momento —desde la música hasta el café— para crear una atmósfera donde puedas bajar la guardia y respirar profundo.</p>
+                        </div>
+                        <div className="pt-4">
+                            <a href="#experiencia" className="inline-flex items-center gap-2 text-earth-900 font-medium border-b border-earth-300 hover:border-earth-900 transition-colors pb-1">
+                                Descubre la experiencia <ArrowDownRight width={18} />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="relative order-1 md:order-2 h-[550px] w-full group">
+                        {/* Imagen Principal */}
+                        <div className="absolute inset-0 mask-arch overflow-hidden shadow-2xl z-10 bg-sand-200">
+                            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-105" alt="Visión" />
+                        </div>
+                        {/* Elemento Decorativo Flotante */}
+                        <div className="absolute -bottom-6 -left-6 z-20 bg-sand-50 p-6 rounded-full shadow-xl animate-spin-slow hidden md:block border border-earth-100">
+                            <svg className="w-28 h-28 text-earth-900" viewBox="0 0 100 100">
+                                <path id="curve" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"></path>
+                                <text className="text-[10px] font-bold uppercase tracking-[0.2em] fill-current">
+                                    <textPath xlinkHref="#curve">Renovación • Espiritual • Pausa •</textPath>
+                                </text>
+                            </svg>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <Sparkles className="text-earth-500 w-6 h-6" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* 6. SPEAKERS SECTION */}
-            <section id="speakers" className="py-32 bg-sand-50 relative z-20">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-20 reveal-item">
-                        <div className="space-y-4 max-w-lg">
-                    <span className="text-earth-500 font-bold text-xs tracking-widest uppercase flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span> Invitadas
-                    </span>
-                            <h2 className="font-serif text-5xl md:text-6xl text-earth-900">Voces que <span className="italic text-earth-500">resuenan</span></h2>
+            {/* Speakers Cards */}
+            <section id="speakers" className="py-24 bg-sand-50 relative">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                        <div>
+                            <span className="text-earth-500 font-semibold text-xs tracking-widest uppercase mb-2 block">Invitadas 2025</span>
+                            <h2 className="font-serif text-5xl text-earth-900">Voces que <span className="italic text-earth-500">inspiran</span></h2>
                         </div>
-                        <p className="text-earth-800/60 max-w-xs mt-6 md:mt-0 font-light border-l border-earth-200 pl-6">
-                            Mujeres seleccionadas no por su fama, sino por la profundidad de su mensaje.
+                        <p className="text-earth-800/60 max-w-md text-sm leading-relaxed text-right md:text-left">
+                            Mujeres que han caminado por el desierto y han encontrado manantiales. Sus historias te desafiarán.
                         </p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {/* Speaker 1 */}
-                        <div className="group relative cursor-pointer hover-trigger reveal-item" onClick={() => openModal('Elena Vasquez', 'Autora Best-Seller', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800')}>
-                            <div className="aspect-[3/4] overflow-hidden rounded-2xl relative shadow-lg">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale group-hover:grayscale-0" alt="Elena" />
-                                <div className="absolute inset-0 bg-earth-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <Play className="text-white w-12 h-12" />
-                                </div>
+                        <div className="group relative">
+                            <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative">
+                                <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
                             </div>
-                            <div className="mt-6 space-y-1">
+                            <div className="text-center">
                                 <h3 className="font-serif text-2xl text-earth-900">Elena Vasquez</h3>
-                                <p className="text-xs uppercase tracking-widest text-earth-400">Autora</p>
+                                <p className="text-earth-500 italic font-serif mb-2">"Restaurando el Altar"</p>
+                                <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
+                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Autora & Conferencista</p>
                             </div>
                         </div>
-                        {/* Speaker 2 */}
-                        <div className="group relative cursor-pointer hover-trigger reveal-item" style={{transitionDelay: '100ms'}} onClick={() => openModal('Sofia M. Ruiz', 'Psicóloga Clínica', 'https://images.unsplash.com/photo-1590650046871-92c887180603?q=80&w=800')}>
-                            <div className="aspect-[3/4] overflow-hidden rounded-2xl relative shadow-lg md:mt-12">
-                                <img src="https://images.unsplash.com/photo-1590650046871-92c887180603?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale group-hover:grayscale-0" alt="Sofia" />
-                                <div className="absolute inset-0 bg-earth-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <Play className="text-white w-12 h-12" />
-                                </div>
+
+                        {/* Speaker 2 (Featured) */}
+                        <div className="group relative md:-mt-12">
+                            <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative shadow-xl">
+                                <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
+                                <div className="absolute top-4 right-4 bg-sand-50/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-earth-900 z-20">Keynote</div>
                             </div>
-                            <div className="mt-6 space-y-1">
+                            <div className="text-center">
                                 <h3 className="font-serif text-2xl text-earth-900">Sofia M. Ruiz</h3>
-                                <p className="text-xs uppercase tracking-widest text-earth-400">Psicóloga</p>
+                                <p className="text-earth-500 italic font-serif mb-2">"Identidad en el Desierto"</p>
+                                <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
+                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Psicóloga Clínica</p>
                             </div>
                         </div>
+
                         {/* Speaker 3 */}
-                        <div className="group relative cursor-pointer hover-trigger reveal-item" style={{transitionDelay: '200ms'}} onClick={() => openModal('CEC Worship', 'Colectivo Musical', 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=800')}>
-                            <div className="aspect-[3/4] overflow-hidden rounded-2xl relative shadow-lg">
-                                <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale group-hover:grayscale-0" alt="Banda" />
-                                <div className="absolute inset-0 bg-earth-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <Play className="text-white w-12 h-12" />
+                        <div className="group relative">
+                            <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative">
+                                <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+                                <img src="https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
+                            </div>
+                            <div className="text-center">
+                                <h3 className="font-serif text-2xl text-earth-900">Banda CEC</h3>
+                                <p className="text-earth-500 italic font-serif mb-2">Worship Experience</p>
+                                <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
+                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Colectivo Musical</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Agenda / Cronograma */}
+            <section id="agenda" className="py-24 bg-white border-y border-earth-100">
+                <div className="max-w-4xl mx-auto px-6">
+                    <div className="text-center mb-16">
+                        <span className="text-earth-500 font-semibold text-xs tracking-widest uppercase">Itinerario</span>
+                        <h2 className="font-serif text-4xl text-earth-900 mt-2">Sábado 15 de Noviembre</h2>
+                    </div>
+
+                    <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-earth-200 before:to-transparent">
+
+                        {/* Item 1 */}
+                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-earth-200 bg-sand-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                <Coffee className="text-earth-600 w-4 h-4" />
+                            </div>
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-sand-50 p-6 rounded-2xl border border-earth-100 hover:border-earth-300 transition-colors">
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className="font-serif text-xl text-earth-900">Registro & Café</span>
+                                    <span className="text-xs font-bold text-earth-500 bg-earth-100/50 px-2 py-1 rounded">08:00 AM</span>
                                 </div>
-                            </div>
-                            <div className="mt-6 space-y-1">
-                                <h3 className="font-serif text-2xl text-earth-900">CEC Worship</h3>
-                                <p className="text-xs uppercase tracking-widest text-earth-400">Música</p>
+                                <p className="text-earth-800/60 text-sm">Recoge tu Welcome Kit y disfruta de un café de especialidad antes de iniciar.</p>
                             </div>
                         </div>
+
+                        {/* Item 2 */}
+                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-earth-200 bg-sand-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                <Music className="text-earth-600 w-4 h-4" />
+                            </div>
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-sand-50 p-6 rounded-2xl border border-earth-100 hover:border-earth-300 transition-colors">
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className="font-serif text-xl text-earth-900">Sesión 1: Apertura</span>
+                                    <span className="text-xs font-bold text-earth-500 bg-earth-100/50 px-2 py-1 rounded">09:30 AM</span>
+                                </div>
+                                <p className="text-earth-800/60 text-sm">Adoración con Banda CEC y mensaje de bienvenida.</p>
+                            </div>
+                        </div>
+
+                        {/* Item 3 */}
+                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-earth-200 bg-sand-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                <Mic className="text-earth-600 w-4 h-4" />
+                            </div>
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-sand-50 p-6 rounded-2xl border border-earth-100 hover:border-earth-300 transition-colors">
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className="font-serif text-xl text-earth-900">Plenaria Principal</span>
+                                    <span className="text-xs font-bold text-earth-500 bg-earth-100/50 px-2 py-1 rounded">11:00 AM</span>
+                                </div>
+                                <p className="text-earth-800/60 text-sm">Elena Vasquez: "Restaurando el Altar".</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            {/* 7. GALLERY BENTO */}
-            <section id="galeria" className="py-24 bg-white relative">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h2 className="font-serif text-4xl text-center mb-16 reveal-item">Memorias del <span className="italic text-earth-500">Encuentro</span></h2>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-4 md:grid-rows-2 gap-4 h-[800px] md:h-[600px]">
-                        {/* Large Item */}
-                        <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-3xl reveal-item hover-trigger">
-                            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Worship" />
-                            <div className="absolute inset-0 bg-earth-900/20 group-hover:bg-transparent transition-colors"></div>
-                            <div className="absolute bottom-6 left-6 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-medium border border-white/10">Worship Night</span>
-                            </div>
-                        </div>
-
-                        {/* Vertical Item */}
-                        <div className="col-span-1 row-span-2 relative overflow-hidden rounded-3xl reveal-item hover-trigger" style={{transitionDelay: '100ms'}}>
-                            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter sepia-[0.3]" alt="Coffee" />
-                        </div>
-
-                        {/* Small Items */}
-                        <div className="col-span-1 row-span-1 bg-earth-900 rounded-3xl flex flex-col items-center justify-center text-sand-50 reveal-item p-6 text-center hover-trigger" style={{transitionDelay: '200ms'}}>
-                            <p className="font-serif text-2xl italic mb-2">"Inolvidable"</p>
-                            <span className="text-xs uppercase tracking-widest opacity-50">CEC 2024</span>
-                        </div>
-
-                        <div className="col-span-1 row-span-1 relative overflow-hidden rounded-3xl reveal-item hover-trigger" style={{transitionDelay: '300ms'}}>
-                            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale" alt="Friends" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 8. EXPERIENCIA */}
+            {/* Experiencia Bento Grid Refinado */}
             <section id="experiencia" className="py-24 bg-earth-900 text-sand-50 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-earth-800/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {[
-                            {icon: Camera, title: "Photo Spots", desc: "Sets diseñados por artistas."},
-                            {icon: Coffee, title: "Barista Coffee", desc: "Lattes ilimitados de especialidad."},
-                            {icon: ShoppingBag, title: "Welcome Kit", desc: "Tote bag y journal de regalo."},
-                            {icon: Music, title: "Acústicos", desc: "Sesiones íntimas en el jardín."}
-                        ].map((item, i) => (
-                            <div key={i} className="group bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 reveal-item hover-trigger" style={{transitionDelay: `${i*100}ms`}}>
-                                <div className="w-12 h-12 rounded-full bg-sand-50/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                    <item.icon className="w-5 h-5 text-sand-50" />
-                                </div>
-                                <h4 className="font-serif text-xl mb-3">{item.title}</h4>
-                                <p className="text-sm text-sand-200/60 leading-relaxed">{item.desc}</p>
+                {/* SVG Decorativo Fondo */}
+                <div className="absolute top-0 right-0 opacity-10 pointer-events-none w-full h-full">
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                        <path d="M0 100 C 30 20 60 20 100 100 Z" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <div className="max-w-6xl mx-auto px-6 relative z-10">
+                    <div className="mb-12 text-center md:text-left">
+                        <span className="text-sand-300 font-medium text-xs tracking-widest uppercase">The Vibe</span>
+                        <h3 className="font-serif text-4xl lg:text-5xl text-sand-50 mt-2">Estética y <span className="italic text-sand-300">Corazón</span></h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+
+                        {/* Card Grande 1: Kit */}
+                        <div className="md:col-span-2 md:row-span-2 bg-earth-800/50 border border-white/10 rounded-3xl p-8 relative overflow-hidden group hover:bg-earth-800 transition-colors duration-500">
+                            <div className="absolute top-8 right-8 text-sand-300 opacity-50 group-hover:opacity-100 transition-opacity">
+                                <ShoppingBag width={32} />
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 9. UBICACIÓN */}
-            <section className="py-0 flex flex-col md:flex-row min-h-[500px]">
-                <div className="md:w-1/2 bg-sand-200 flex flex-col justify-center p-16 md:p-24 relative overflow-hidden reveal-item">
-                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#543D32 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-                    <div className="relative z-10 space-y-6">
-                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-earth-800">
-                    <MapPin className="w-4 h-4" /> La Sede
-                </span>
-                        <h2 className="font-serif text-5xl text-earth-900">Salón Ambar <br /> Rossell Palace</h2>
-                        <div className="w-12 h-1 bg-earth-800"></div>
-                        <div className="space-y-1 text-earth-800/80">
-                            <p className="font-medium">Av. La Reforma 12-34, Zona 9</p>
-                            <p className="text-sm">Guatemala City</p>
+                            <div className="relative z-10 h-full flex flex-col justify-end">
+                                <h4 className="font-serif text-3xl mb-2 text-sand-50">Welcome Kit</h4>
+                                <p className="text-sand-200/80 font-light">Tote bag exclusiva, journal de oración personalizado y regalos curados de nuestros sponsors. Diseñado para usarse todo el año.</p>
+                                <div className="mt-6 w-full h-48 rounded-xl overflow-hidden opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Kit" />
+                                </div>
+                            </div>
                         </div>
-                        <div className="pt-4">
-                            <a href="#" className="inline-block border-b border-earth-800 pb-1 text-sm font-medium hover:text-earth-600 transition-colors hover-trigger">Ver en Google Maps</a>
+
+                        {/* Card 2: Coffee */}
+                        <div className="md:col-span-2 md:row-span-1 bg-sand-100/5 border border-white/10 rounded-3xl p-6 flex items-center justify-between group hover:bg-white/10 transition-colors">
+                            <div className="space-y-2">
+                                <h4 className="font-serif text-2xl text-sand-50">Specialty Coffee</h4>
+                                <p className="text-sm text-sand-200/70">Baristas ilimitados. Lattes con arte.</p>
+                            </div>
+                            <Coffee className="text-sand-300 group-hover:scale-110 transition-transform" width={40} />
+                        </div>
+
+                        {/* Card 3: Photo */}
+                        <div className="md:col-span-1 md:row-span-1 bg-sand-100/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-center items-center text-center group hover:bg-white/10 transition-colors">
+                            <div className="bg-white/10 p-4 rounded-full mb-4 text-sand-50">
+                                <Camera width={24} />
+                            </div>
+                            <h4 className="font-serif text-xl text-sand-50">Photo Spots</h4>
+                            <p className="text-xs text-sand-200/70 mt-2">#CoquetteVibes</p>
+                        </div>
+
+                        {/* Card 4: Connection */}
+                        <div className="md:col-span-1 md:row-span-1 bg-earth-600 border border-white/10 rounded-3xl p-6 flex flex-col justify-between group overflow-hidden">
+                            <div className="absolute inset-0 bg-earth-900/20 mix-blend-overlay"></div>
+                            <Users className="text-sand-100 relative z-10" width={24} />
+                            <div className="relative z-10">
+                                <h4 className="font-serif text-xl text-sand-50">Community</h4>
+                                <p className="text-xs text-sand-100/80 mt-1">Conecta con amigas.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonios Scroll Horizontal */}
+            <section className="py-24 bg-white overflow-hidden">
+                <div className="max-w-6xl mx-auto px-6 mb-10 flex justify-between items-end">
+                    <div>
+                        <span className="text-earth-500 font-semibold text-xs tracking-widest uppercase">Testimonios</span>
+                        <h2 className="font-serif text-4xl text-earth-900 mt-2">Lo que dicen <span className="italic text-earth-500">ellas</span></h2>
+                    </div>
+                    {/* Controles visuales */}
+                    <div className="flex gap-2">
+                        <div className="w-8 h-8 rounded-full border border-earth-200 flex items-center justify-center text-earth-400"><ArrowLeft width={16} /></div>
+                        <div className="w-8 h-8 rounded-full bg-earth-900 text-sand-50 flex items-center justify-center"><ArrowRight width={16} /></div>
+                    </div>
+                </div>
+
+                <div className="flex overflow-x-auto gap-6 px-6 pb-10 no-scrollbar snap-x snap-mandatory max-w-[1600px] mx-auto">
+                    {/* Testimonio 1 */}
+                    <div className="min-w-[320px] md:min-w-[400px] bg-sand-50 p-8 rounded-2xl border border-earth-100 snap-center hover:border-earth-300 transition-colors">
+                        <div className="text-earth-300 mb-4"><Quote width={24} /></div>
+                        <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Fue un fin de semana que marcó un antes y un después en mi relación con Dios. Los detalles, el café, todo increíblemente cuidado."</p>
+                        <div className="flex items-center gap-3">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Ana" />
+                            <div>
+                                <p className="font-serif text-earth-900 text-sm">Ana Lucía</p>
+                                <p className="text-[10px] uppercase tracking-wider text-earth-500">Asistente 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Testimonio 2 */}
+                    <div className="min-w-[320px] md:min-w-[400px] bg-sand-50 p-8 rounded-2xl border border-earth-100 snap-center hover:border-earth-300 transition-colors">
+                        <div className="text-earth-300 mb-4"><Quote width={24} /></div>
+                        <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Fui sola porque soy nueva en la ciudad y salí con un grupo de amigas precioso. El ambiente es acogedor y nada religioso."</p>
+                        <div className="flex items-center gap-3">
+                            <img src="https://randomuser.me/api/portraits/women/28.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Mariana" />
+                            <div>
+                                <p className="font-serif text-earth-900 text-sm">Mariana G.</p>
+                                <p className="text-[10px] uppercase tracking-wider text-earth-500">Estudiante</p>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Testimonio 3 */}
+                    <div className="min-w-[320px] md:min-w-[400px] bg-sand-50 p-8 rounded-2xl border border-earth-100 snap-center hover:border-earth-300 transition-colors">
+                        <div className="text-earth-300 mb-4"><Quote width={24} /></div>
+                        <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Necesitaba este respiro. Salí con el corazón lleno y nuevas fuerzas. ¡Ya tengo mi entrada para este año!"</p>
+                        <div className="flex items-center gap-3">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Carla" />
+                            <div>
+                                <p className="font-serif text-earth-900 text-sm">Carla Méndez</p>
+                                <p className="text-[10px] uppercase tracking-wider text-earth-500">Emprendedora</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="md:w-1/2 bg-earth-400 relative group overflow-hidden">
-                    <div className="absolute inset-0 grayscale contrast-[0.9] brightness-[0.9] sepia-[0.2]">
-                        <img src="https://images.unsplash.com/photo-1596136614488-75618797b5e4?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Interior" />
+            </section>
+
+            {/* FAQ Accordion */}
+            <section id="faq" className="py-24 bg-sand-50">
+                <div className="max-w-3xl mx-auto px-6">
+                    <h2 className="font-serif text-4xl text-center text-earth-900 mb-12">Preguntas Frecuentes</h2>
+
+                    <div className="space-y-4">
+                        <details className="group bg-white rounded-xl border border-earth-100 overflow-hidden transition-all duration-300 hover:shadow-md open:shadow-md">
+                            <summary className="flex justify-between items-center cursor-pointer p-6 font-medium text-earth-900 select-none">
+                                ¿Cuál es el código de vestimenta?
+                                <span className="transition-transform duration-300 group-open:rotate-180 text-earth-400"><ChevronDown /></span>
+                            </summary>
+                            <div className="px-6 pb-6 text-earth-800/70 text-sm leading-relaxed border-t border-dashed border-earth-100 pt-4">
+                                El estilo es "Smart Casual" o "Coquette Casual" en tonos tierra/neutros. Queremos que te sientas cómoda pero arreglada para la ocasión. ¡Habrá muchos spots para fotos!
+                            </div>
+                        </details>
+
+                        <details className="group bg-white rounded-xl border border-earth-100 overflow-hidden transition-all duration-300 hover:shadow-md open:shadow-md">
+                            <summary className="flex justify-between items-center cursor-pointer p-6 font-medium text-earth-900 select-none">
+                                ¿Habrá cuidado de niños?
+                                <span className="transition-transform duration-300 group-open:rotate-180 text-earth-400"><ChevronDown /></span>
+                            </summary>
+                            <div className="px-6 pb-6 text-earth-800/70 text-sm leading-relaxed border-t border-dashed border-earth-100 pt-4">
+                                Este evento está diseñado para tu descanso total, por lo que no contaremos con área de niños. Es un tiempo exclusivamente para ti.
+                            </div>
+                        </details>
+
+                        <details className="group bg-white rounded-xl border border-earth-100 overflow-hidden transition-all duration-300 hover:shadow-md open:shadow-md">
+                            <summary className="flex justify-between items-center cursor-pointer p-6 font-medium text-earth-900 select-none">
+                                ¿Qué incluye el ticket?
+                                <span className="transition-transform duration-300 group-open:rotate-180 text-earth-400"><ChevronDown /></span>
+                            </summary>
+                            <div className="px-6 pb-6 text-earth-800/70 text-sm leading-relaxed border-t border-dashed border-earth-100 pt-4">
+                                Acceso a todas las conferencias y talleres, Welcome Kit (Tote bag + Journal), Coffee Break ilimitado y acceso a la experiencia de adoración.
+                            </div>
+                        </details>
                     </div>
                 </div>
             </section>
 
-            {/* 10. CTA FINAL & FOOTER */}
-            <section id="registro" className="py-32 bg-sand-100 text-center reveal-item">
-                <h2 className="font-serif text-6xl tracking-tighter mb-8 text-earth-900">Tu silla está lista</h2>
-                <button className="bg-earth-900 text-sand-50 px-10 py-5 rounded-full font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] flex items-center gap-4 text-sm shadow-2xl mx-auto hover-trigger hover:bg-earth-800">
-                    Adquirir Ticket • Q125 <ArrowRight className="w-4 h-4" />
-                </button>
-                <div className="flex items-center justify-center gap-6 mt-12 opacity-50">
-                    <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4" /><span className="text-xs uppercase tracking-widest font-medium">Pago Seguro</span></div>
+            {/* Pricing / Registration */}
+            <section id="registro" className="py-24 bg-white relative overflow-hidden">
+                {/* Fondo radial sutil */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-sand-100 via-white to-white"></div>
+
+                <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
+                    <div className="md:w-1/2 space-y-6 text-center md:text-left">
+                        <h2 className="font-serif text-6xl text-earth-900 tracking-tighter">Tu lugar<br />te espera</h2>
+                        <p className="text-lg text-earth-800/70 font-light max-w-md mx-auto md:mx-0">
+                            No dejes pasar esta oportunidad de renovación. El cupo es limitado para mantener la intimidad del evento.
+                        </p>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-8 opacity-60 grayscale mt-8">
+                            <div className="flex items-center gap-2"><ShieldCheck /> Pago Seguro</div>
+                            <div className="flex items-center gap-2"><Ticket /> Ticket Digital</div>
+                        </div>
+                    </div>
+
+                    <div className="md:w-1/2 w-full">
+                        <div className="relative max-w-sm mx-auto group">
+                            {/* Efecto de sombra difuminada detrás del ticket */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-earth-300 to-earth-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+
+                            {/* Ticket Card */}
+                            <div className="relative bg-sand-50 border border-sand-200 rounded-[1.8rem] p-8 md:p-10 shadow-2xl">
+                                {/* Perforaciones decorativas (círculos laterales) */}
+                                <div className="absolute top-1/2 -left-3 w-6 h-6 bg-white rounded-full"></div>
+                                <div className="absolute top-1/2 -right-3 w-6 h-6 bg-white rounded-full"></div>
+
+                                <div className="flex justify-between items-start mb-8 border-b border-dashed border-earth-300 pb-8">
+                                    <div>
+                                        <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-earth-500 mb-2">Pase General</span>
+                                        <span className="font-serif text-4xl text-earth-900">Acceso Total</span>
+                                        <ul className="mt-4 space-y-2 text-sm text-earth-600">
+                                            <li className="flex items-center gap-2"><Check className="text-earth-400" /> Conferencias</li>
+                                            <li className="flex items-center gap-2"><Check className="text-earth-400" /> Welcome Kit</li>
+                                            <li className="flex items-center gap-2"><Check className="text-earth-400" /> Coffee Break</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-end justify-between mb-6">
+                                    <span className="text-sm text-earth-500 font-medium">Precio final</span>
+                                    <span className="font-serif text-5xl text-earth-900">Q125</span>
+                                </div>
+
+                                <button className="w-full bg-earth-900 text-sand-50 py-4 rounded-xl font-medium tracking-wide hover:bg-earth-800 transition-all duration-300 shadow-lg shadow-earth-900/20 flex items-center justify-center gap-2 group/btn relative overflow-hidden">
+                                    <div className="absolute inset-0 w-full h-full bg-white/10 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-500 skew-x-12"></div>
+                                    COMPRAR AHORA <ArrowRight className="group-hover/btn:translate-x-1 transition-transform" width={18} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <footer className="bg-earth-900 text-sand-300 py-20 text-center border-t border-white/5">
-                <div className="flex justify-center gap-8 mb-8">
-                    <Instagram className="hover:text-white transition-colors hover-trigger cursor-pointer" />
-                    <Twitter className="hover:text-white transition-colors hover-trigger cursor-pointer" />
-                    <Mail className="hover:text-white transition-colors hover-trigger cursor-pointer" />
+            {/* Footer */}
+            <footer className="bg-earth-900 text-sand-200 pt-20 pb-28 md:pb-10 border-t border-white/5">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+                        <div className="space-y-4">
+                            <p className="font-serif text-4xl text-sand-50">Cuando estoy contigo</p>
+                            <p className="text-sand-200/60 font-light max-w-xs">Conferencia de Mujeres 2025. <br />Un evento para el alma.</p>
+                        </div>
+                        <div className="flex gap-12 text-sm">
+                            <div className="flex flex-col gap-4">
+                                <span className="font-bold text-sand-50 uppercase tracking-widest text-xs">Evento</span>
+                                <a href="#speakers" className="hover:text-white transition-colors">Speakers</a>
+                                <a href="#agenda" className="hover:text-white transition-colors">Agenda</a>
+                                <a href="#faq" className="hover:text-white transition-colors">Ayuda</a>
+                            </div>
+                            <div className="flex flex-col gap-4">
+                                <span className="font-bold text-sand-50 uppercase tracking-widest text-xs">Social</span>
+                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><Instagram /> Instagram</a>
+                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><Facebook /> Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-40">
+                        <p>© 2025 Iglesia CEC. Todos los derechos reservados.</p>
+                        <div className="flex gap-4">
+                            <a href="#">Privacidad</a>
+                            <a href="#">Términos</a>
+                        </div>
+                    </div>
                 </div>
-                <p className="text-[10px] tracking-[0.3em] opacity-30 uppercase">Designed for Purpose • 2025</p>
             </footer>
 
-            {/* MODAL SPEAKER */}
-            <dialog ref={modalRef} onClick={(e) => { if (e.target === modalRef.current) closeModal(); }} className="bg-transparent p-0 m-auto backdrop:bg-earth-900/40 w-full max-w-4xl rounded-3xl shadow-2xl outline-none">
-                <div className="bg-sand-50 grid md:grid-cols-2 rounded-3xl overflow-hidden relative">
-                    <button onClick={closeModal} className="absolute top-4 right-4 z-50 bg-white/50 hover:bg-white backdrop-blur p-2 rounded-full transition-colors hover-trigger">
-                        <X className="w-6 h-6 text-earth-900" />
-                    </button>
-                    <div className="relative bg-earth-200 min-h-[400px]">
-                        <img src={modalContent.img} className="w-full h-full object-cover" alt="Speaker" />
-                    </div>
-                    <div className="p-10 md:p-14 flex flex-col justify-center">
-                        <p className="text-xs font-bold uppercase tracking-widest text-earth-500 mb-2">Speaker</p>
-                        <h2 className="font-serif text-4xl text-earth-900 mb-6">{modalContent.name}</h2>
-                        <p className="text-earth-800/70 font-light leading-relaxed mb-8">{modalContent.role} — Una voz autorizada en su campo con un mensaje transformador para esta generación.</p>
-                        <button className="w-fit border border-earth-900/20 px-6 py-2 rounded-full text-sm font-medium hover:bg-earth-900 hover:text-white transition-colors hover-trigger">Ver Perfil Completo</button>
-                    </div>
-                </div>
-            </dialog>
+            {/* Botón Flotante Móvil Mejorado */}
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:hidden z-40">
+                <a href="#registro" className="flex items-center justify-between px-6 py-4 bg-earth-900/90 backdrop-blur-md text-sand-50 rounded-full shadow-2xl border border-white/10 group">
+                    <span className="font-serif text-lg">Inscribirme</span>
+                    <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/10 px-3 py-1 rounded-full group-hover:bg-white/20 transition-colors">
+                        Q125 <ArrowRight />
+                    </span>
+                </a>
+            </div>
 
         </main>
     );

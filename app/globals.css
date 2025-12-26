@@ -1,77 +1,52 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    --animate-spin-slow: spin 12s linear infinite;
-}
+/* --- ESTILOS VISUALES --- */
 
 :root {
-    --color-fondo: #F9F8F6;
-    --color-texto: #2E221E;
+    --color-fondo: #FAF9F7;
+    --color-texto: #3D2B24;
 }
 
-body {
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    @apply antialiased overflow-x-hidden;
+/* Tipografía */
+.text-balance { text-wrap: balance; }
 
-    /* Ocultamos el cursor del sistema solo en escritorio para usar el nuestro */
-    @media (min-width: 768px) {
-        cursor: none;
-    }
+/* Scrollbar minimalista */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D6C7B5; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #8C705F; }
+
+/* Utilidades de diseño */
+.mask-arch { border-radius: 200px 200px 0 0; }
+.glass-panel { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+
+/* Utilidad para ocultar scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Animación de Acordeón (FAQ) */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+
+@keyframes sweep {
+    0% {opacity: 0; transform: translateY(-5px)}
+    100% {opacity: 1; transform: translateY(0)}
 }
 
-html { scroll-behavior: smooth; }
-
-/* --- CURSOR DE ALTA FIDELIDAD --- */
-#custom-cursor {
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: difference; /* El secreto para que se vea "cool" sobre fondos oscuros */
-    transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1),
-    height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.1s linear;
-}
-
-/* --- REVEAL ON SCROLL --- */
-.reveal-item {
-    opacity: 0;
-    transform: translateY(40px);
-    filter: blur(10px);
-    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-}
-
-/* --- UTILIDADES UX --- */
-@utility mask-arch {
-    border-radius: 200px 200px 0 0;
-}
-
-@utility bg-noise {
+/* Ruido de fondo (Noise texture) */
+.bg-noise {
     position: relative;
-    &::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
-        opacity: 0.04;
-        pointer-events: none;
-        z-index: 50;
-        mix-blend-mode: overlay;
-    }
 }
-
-/* Animaciones suaves para Modal y Toast */
-dialog[open] { animation: modal-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-dialog::backdrop { background: rgba(46, 34, 30, 0.6); backdrop-filter: blur(8px); animation: fade-in 0.5s ease forwards; }
-
-@keyframes modal-in { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-
-.toast-enter { transform: translateY(100%); opacity: 0; }
-.toast-active { transform: translateY(0); opacity: 1; }
-.toast-exit { transform: translateY(20px); opacity: 0; }
+.bg-noise::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}
