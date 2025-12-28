@@ -9,14 +9,18 @@
     --color-texto: #3D2B24;
 }
 
-/* Tipografía */
+/* Tipografía y suavizado de fuentes */
 .text-balance { text-wrap: balance; }
+html { 
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale; 
+}
 
 /* Scrollbar minimalista */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #D6C7B5; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #8C705F; }
+::-webkit-scrollbar-thumb:hover { background: #4A3B32; }
 
 /* Utilidades de diseño */
 .mask-arch { border-radius: 200px 200px 0 0; }
@@ -25,6 +29,20 @@
 /* Utilidad para ocultar scrollbar */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Masonry Grid para testimonios */
+.masonry-grid { 
+    column-count: 1; 
+    column-gap: 1.5rem; 
+}
+@media (min-width: 768px) { 
+    .masonry-grid { 
+        column-count: 3; 
+    } 
+}
+.break-inside-avoid { 
+    break-inside: avoid; 
+}
 
 /* Animación de Acordeón (FAQ) */
 details > summary { list-style: none; }

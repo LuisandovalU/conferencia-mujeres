@@ -1,24 +1,9 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-// Cargamos las fuentes y asignamos variables CSS
-const dmSerif = DM_Serif_Display({
-    weight: "400",
-    subsets: ["latin"],
-    variable: "--font-serif",
-    display: "swap",
-});
-
-const inter = Inter({
-    subsets: ["latin"],
-    variable: "--font-sans",
-    display: "swap",
-});
-
 export const metadata: Metadata = {
-    title: "Cuando estoy | Conferencia de Mujeres 2025",
-    description: "Un refugio en el desierto para reencontrarte con lo esencial.",
+    title: "Cuando estoy contigo | Conferencia de Mujeres 2025",
+    description: "Conferencia de Mujeres 2025 - Un espacio para encontrar paz y conexión",
 };
 
 export default function RootLayout({
@@ -28,8 +13,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="es" className="scroll-smooth">
-        {/* Inyectamos las variables de las fuentes en el body */}
-        <body className={`${dmSerif.variable} ${inter.variable} antialiased font-sans bg-sand-50 text-earth-900`}>
+        <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            <link 
+                href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" 
+                rel="stylesheet" 
+            />
+        </head>
+        <body className="antialiased font-sans bg-sand-50 text-earth-900">
         {children}
         </body>
         </html>
