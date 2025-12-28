@@ -16,18 +16,16 @@ export default function Home() {
             {/* Navegación */}
             <nav className="fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-sand-50/80 border-b border-earth-900/5">
                 <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <a href="#" className="font-serif text-2xl tracking-tighter text-earth-900 hover:opacity-70 transition-opacity">CEC<span className="text-earth-500">.</span></a>
+                    <a href="#" className="font-serif text-2xl tracking-tighter text-earth-900 hover:opacity-70 transition-opacity">CEC<span className="text-coffee-light">.</span></a>
 
                     <div className="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-earth-800/80">
                         <a href="#concepto" className="hover:text-earth-600 transition-colors">Concepto</a>
-                        <a href="#speakers" className="hover:text-earth-600 transition-colors">Speakers</a>
-                        <a href="#agenda" className="hover:text-earth-600 transition-colors">Agenda</a>
                         <a href="#experiencia" className="hover:text-earth-600 transition-colors">Experiencia</a>
-                        <a href="#faq" className="hover:text-earth-600 transition-colors">FAQ</a>
+                        <a href="#ubicacion" className="hover:text-earth-600 transition-colors">Ubicación</a>
                     </div>
 
                     <a href="#registro" className="hidden md:inline-flex bg-earth-900 text-sand-50 px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 hover:bg-earth-800 hover:shadow-lg hover:shadow-earth-900/10 hover:-translate-y-0.5">
-                        Reservar Lugar
+                        Reservar
                     </a>
                 </div>
             </nav>
@@ -39,49 +37,46 @@ export default function Home() {
                 <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-earth-400/20 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 text-center px-4 max-w-5xl mx-auto space-y-8 -mt-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-earth-900/10 bg-white/30 backdrop-blur-sm animate-fade-up">
-                        <span className="w-1.5 h-1.5 rounded-full bg-earth-600 animate-pulse"></span>
-                        <span className="text-[10px] uppercase tracking-[0.2em] text-earth-600 font-semibold">Conferencia 2025</span>
+                    {/* Pill button con fecha */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-earth-900/10 bg-white/30 backdrop-blur-sm animate-fade-up">
+                        <span className="w-1.5 h-1.5 rounded-full bg-coffee-light animate-pulse"></span>
+                        <span className="text-xs tracking-wide text-earth-600 font-medium">Nov 23 • 3:30 PM</span>
                     </div>
 
                     <h1 className="font-serif text-6xl md:text-8xl lg:text-[9.5rem] leading-[0.85] text-earth-900 tracking-tighter text-balance animate-fade-up [animation-delay:100ms]">
                         Cuando estoy <br />
-                        <span className="italic text-earth-500 relative inline-block">
+                        <span className="italic text-coffee-light relative inline-block">
                             contigo
-                            <svg className="absolute w-full h-3 -bottom-1 md:-bottom-4 left-0 text-earth-300 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 10 Q 50 20 100 10" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
+                            <svg className="absolute w-full h-3 -bottom-1 md:-bottom-4 left-0 text-beige-300 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 10 Q 50 20 100 10" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
                         </span>
                     </h1>
 
                     <p className="text-earth-800/70 md:text-xl text-lg font-light tracking-wide max-w-lg mx-auto animate-fade-up [animation-delay:200ms]">
-                        Un refugio en el desierto para reencontrarte con lo esencial.
+                        conferencia de mujeres 2025
                     </p>
 
-                    {/* Countdown Minimalista */}
-                    <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-6 animate-fade-up [animation-delay:300ms]">
-                        <div className="text-center group cursor-default">
-                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">23</span>
-                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Días</span>
-                        </div>
-                        <div className="text-center group cursor-default">
-                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">08</span>
-                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Hrs</span>
-                        </div>
-                        <div className="text-center group cursor-default">
-                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">45</span>
-                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Min</span>
-                        </div>
-                        <div className="text-center group cursor-default">
-                            <span className="font-serif text-4xl text-earth-900 group-hover:text-earth-600 transition-colors">12</span>
-                            <span className="block text-[10px] uppercase tracking-widest text-earth-500 mt-1">Seg</span>
+                    {/* Indicador de scroll */}
+                    <div className="pt-12 animate-fade-up [animation-delay:400ms]">
+                        <div className="inline-flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                            <span className="text-xs text-earth-600">Scroll</span>
+                            <div className="animate-bounce">
+                                <ArrowDownRight className="text-earth-600" width={20} />
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Dunas SVG Integrado */}
+                {/* Montañas SVG en 4 capas con efecto parallax */}
                 <div className="w-full absolute bottom-0 left-0 pointer-events-none z-0">
-                    <svg className="w-full h-auto min-h-[150px]" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#E6DDD3" fillOpacity="0.5" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                        <path fill="#ffffff" fillOpacity="1" d="M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,234.7C672,256,768,288,864,277.3C960,267,1056,213,1152,202.7C1248,192,1344,224,1392,240L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    <svg className="w-full h-auto min-h-[200px]" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        {/* Capa 1 - Montaña más lejana */}
+                        <path fill="#E6DDD3" fillOpacity="0.3" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        {/* Capa 2 */}
+                        <path fill="#D6C7B5" fillOpacity="0.4" d="M0,256L48,245.3C96,235,192,213,288,202.7C384,192,480,192,576,208C672,224,768,256,864,261.3C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        {/* Capa 3 */}
+                        <path fill="#A68A76" fillOpacity="0.5" d="M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,234.7C672,256,768,288,864,277.3C960,267,1056,213,1152,202.7C1248,192,1344,224,1392,240L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        {/* Capa 4 - Montaña más cercana */}
+                        <path fill="#8C705F" fillOpacity="0.6" d="M0,256L48,261.3C96,267,192,277,288,266.7C384,256,480,224,576,208C672,192,768,192,864,208C960,224,1056,256,1152,261.3C1248,267,1344,245,1392,234.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                     </svg>
                 </div>
             </header>
@@ -92,10 +87,10 @@ export default function Home() {
                     <div className="space-y-8 order-2 md:order-1">
                         <div className="inline-flex items-center gap-3">
                             <span className="h-[1px] w-12 bg-earth-400"></span>
-                            <span className="text-earth-500 font-semibold text-xs tracking-widest uppercase">La Visión</span>
+                            <span className="text-coffee-light font-semibold text-xs tracking-widest uppercase">Manifiesto</span>
                         </div>
                         <h2 className="font-serif text-5xl md:text-6xl text-earth-900 leading-[1.1]">
-                            Despojar el ruido,<br />encontrar <span className="italic text-earth-500">la paz</span>
+                            Despojar el ruido,<br />encontrar <span className="italic text-coffee-light">la paz</span>
                         </h2>
                         <div className="space-y-6 text-earth-800/70 font-light text-lg leading-relaxed">
                             <p>Vivimos saturadas de información y expectativas. "Cuando estoy contigo" no es una conferencia para hacer más, sino un espacio para ser. </p>
@@ -147,13 +142,13 @@ export default function Home() {
                         <div className="group relative">
                             <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative">
                                 <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
+                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
                             </div>
                             <div className="text-center">
                                 <h3 className="font-serif text-2xl text-earth-900">Elena Vasquez</h3>
                                 <p className="text-earth-500 italic font-serif mb-2">"Restaurando el Altar"</p>
                                 <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
-                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Autora & Conferencista</p>
+                                <p className="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Autora & Conferencista</p>
                             </div>
                         </div>
 
@@ -161,14 +156,14 @@ export default function Home() {
                         <div className="group relative md:-mt-12">
                             <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative shadow-xl">
                                 <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
+                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
                                 <div className="absolute top-4 right-4 bg-sand-50/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-earth-900 z-20">Keynote</div>
                             </div>
                             <div className="text-center">
                                 <h3 className="font-serif text-2xl text-earth-900">Sofia M. Ruiz</h3>
                                 <p className="text-earth-500 italic font-serif mb-2">"Identidad en el Desierto"</p>
                                 <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
-                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Psicóloga Clínica</p>
+                                <p className="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Psicóloga Clínica</p>
                             </div>
                         </div>
 
@@ -176,13 +171,13 @@ export default function Home() {
                         <div className="group relative">
                             <div className="aspect-[3/4] overflow-hidden rounded-t-[100px] rounded-b-2xl mb-6 relative">
                                 <div className="absolute inset-0 bg-earth-900/10 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                                <img src="https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
+                                <img src="https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" alt="Speaker" />
                             </div>
                             <div className="text-center">
                                 <h3 className="font-serif text-2xl text-earth-900">Banda CEC</h3>
                                 <p className="text-earth-500 italic font-serif mb-2">Worship Experience</p>
                                 <div className="w-full h-[1px] bg-earth-200 mx-auto my-4 max-w-[50px]"></div>
-                                <p class="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Colectivo Musical</p>
+                                <p className="text-xs text-earth-800/60 font-medium uppercase tracking-wider">Colectivo Musical</p>
                             </div>
                         </div>
                     </div>
@@ -246,7 +241,7 @@ export default function Home() {
             </section>
 
             {/* Experiencia Bento Grid Refinado */}
-            <section id="experiencia" className="py-24 bg-earth-900 text-sand-50 relative overflow-hidden">
+            <section id="experiencia" className="py-24 bg-coffee-dark text-sand-50 relative overflow-hidden">
                 {/* SVG Decorativo Fondo */}
                 <div className="absolute top-0 right-0 opacity-10 pointer-events-none w-full h-full">
                     <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -264,7 +259,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
 
                         {/* Card Grande 1: Kit */}
-                        <div className="md:col-span-2 md:row-span-2 bg-earth-800/50 border border-white/10 rounded-3xl p-8 relative overflow-hidden group hover:bg-earth-800 transition-colors duration-500">
+                        <div className="md:col-span-2 md:row-span-2 bg-coffee-darker/50 border border-white/10 rounded-3xl p-8 relative overflow-hidden group hover:bg-coffee-darker transition-colors duration-500">
                             <div className="absolute top-8 right-8 text-sand-300 opacity-50 group-hover:opacity-100 transition-opacity">
                                 <ShoppingBag width={32} />
                             </div>
@@ -296,8 +291,8 @@ export default function Home() {
                         </div>
 
                         {/* Card 4: Connection */}
-                        <div className="md:col-span-1 md:row-span-1 bg-earth-600 border border-white/10 rounded-3xl p-6 flex flex-col justify-between group overflow-hidden">
-                            <div className="absolute inset-0 bg-earth-900/20 mix-blend-overlay"></div>
+                        <div className="md:col-span-1 md:row-span-1 bg-coffee-medium border border-white/10 rounded-3xl p-6 flex flex-col justify-between group overflow-hidden">
+                            <div className="absolute inset-0 bg-coffee-dark/20 mix-blend-overlay"></div>
                             <Users className="text-sand-100 relative z-10" width={24} />
                             <div className="relative z-10">
                                 <h4 className="font-serif text-xl text-sand-50">Community</h4>
@@ -329,7 +324,7 @@ export default function Home() {
                         <div className="text-earth-300 mb-4"><Quote width={24} /></div>
                         <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Fue un fin de semana que marcó un antes y un después en mi relación con Dios. Los detalles, el café, todo increíblemente cuidado."</p>
                         <div className="flex items-center gap-3">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Ana" />
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" className="w-10 h-10 rounded-full object-cover grayscale" alt="Ana" />
                             <div>
                                 <p className="font-serif text-earth-900 text-sm">Ana Lucía</p>
                                 <p className="text-[10px] uppercase tracking-wider text-earth-500">Asistente 2024</p>
@@ -341,7 +336,7 @@ export default function Home() {
                         <div className="text-earth-300 mb-4"><Quote width={24} /></div>
                         <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Fui sola porque soy nueva en la ciudad y salí con un grupo de amigas precioso. El ambiente es acogedor y nada religioso."</p>
                         <div className="flex items-center gap-3">
-                            <img src="https://randomuser.me/api/portraits/women/28.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Mariana" />
+                            <img src="https://randomuser.me/api/portraits/women/28.jpg" className="w-10 h-10 rounded-full object-cover grayscale" alt="Mariana" />
                             <div>
                                 <p className="font-serif text-earth-900 text-sm">Mariana G.</p>
                                 <p className="text-[10px] uppercase tracking-wider text-earth-500">Estudiante</p>
@@ -353,7 +348,7 @@ export default function Home() {
                         <div className="text-earth-300 mb-4"><Quote width={24} /></div>
                         <p className="text-earth-800/80 font-light italic mb-6 leading-relaxed text-lg">"Necesitaba este respiro. Salí con el corazón lleno y nuevas fuerzas. ¡Ya tengo mi entrada para este año!"</p>
                         <div className="flex items-center gap-3">
-                            <img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-10 h-10 rounded-full object-cover grayscale" alt="Carla" />
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" className="w-10 h-10 rounded-full object-cover grayscale" alt="Carla" />
                             <div>
                                 <p className="font-serif text-earth-900 text-sm">Carla Méndez</p>
                                 <p className="text-[10px] uppercase tracking-wider text-earth-500">Emprendedora</p>
@@ -458,7 +453,7 @@ export default function Home() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-earth-900 text-sand-200 pt-20 pb-28 md:pb-10 border-t border-white/5">
+            <footer className="bg-coffee-darker text-sand-200 pt-20 pb-28 md:pb-10 border-t border-white/5">
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
                         <div className="space-y-4">

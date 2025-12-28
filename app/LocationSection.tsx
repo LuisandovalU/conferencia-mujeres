@@ -2,7 +2,7 @@
 'use client'
 import React from 'react'
 
-export default function LocationSection(): JSX.Element {
+export default function LocationSection() {
     return (
         // CAMBIO: Se pinta con el fondo CLARO para contrastar con la sección anterior
         <section className="bg-[var(--color-fondo)] py-20 px-4 text-[var(--color-texto)]">
