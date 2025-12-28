@@ -1,26 +1,43 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Montserrat, Dancing_Script } from "next/font/google";
-import "./globals.css";
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter, DM_Serif_Display, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import "./globals.css"
 
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
-const dancing = Dancing_Script({ subsets: ["latin"], variable: "--font-script" });
+const inter = Inter({
+    subsets: ["latin"],
+    variable: "--font-inter",
+})
+
+const dmSerif = DM_Serif_Display({
+    weight: ["400"],
+    subsets: ["latin"],
+    variable: "--font-dm-serif",
+    style: ["normal", "italic"],
+})
+
+const geistMono = Geist_Mono({
+    subsets: ["latin"],
+    variable: "--font-geist-mono",
+})
 
 export const metadata: Metadata = {
-    title: "Conferencia de Mujeres | Cuando estoy Contigo",
-    description: "Una Velada Transformadora | Noviembre 23",
-};
+    title: "Cuando estoy | Conferencia de Mujeres 2025",
+    description: "Conferencia de Mujeres 2025 - Un espacio para ser, volver al origen.",
+    generator: "v0.app",
+}
 
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
-    children: React.ReactNode;
+    children: React.ReactNode
 }>) {
     return (
-        <html lang="es">
-        <body className={`${playfair.variable} ${montserrat.variable} ${dancing.variable} font-sans antialiased bg-sand-100 bg-noise`}>
+        <html lang="es" className="scroll-smooth">
+        <body className={`${inter.variable} ${dmSerif.variable} ${geistMono.variable} font-sans antialiased`}>
         {children}
+        <Analytics />
         </body>
         </html>
-    );
+    )
 }
