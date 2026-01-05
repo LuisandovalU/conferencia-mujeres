@@ -1,9 +1,16 @@
 import { Check, ArrowRight } from "lucide-react"
 
+/**
+ * RegistroSection component that displays the registration CTA and ticket details.
+ * Features a visual ticket design with pricing and features.
+ * 
+ * @returns {JSX.Element} The rendered registration section.
+ */
 export function RegistroSection() {
     return (
         <section id="registro" className="py-24 bg-beige-100 relative overflow-hidden">
             <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
+                {/* Information Area: Catchy headline and description */}
                 <div className="md:w-1/2 space-y-6 text-center md:text-left">
                     <div className="inline-block bg-coffee-light text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded mb-2">
                         Last Call
@@ -18,17 +25,19 @@ export function RegistroSection() {
                     </p>
                 </div>
 
+                {/* Ticket Design Container: Interactive element with shadow effects */}
                 <div className="md:w-1/2 w-full">
-                    {/* Ticket Design */}
+                    {/* Ticket Design: Uses scalloped edges and cutouts for a realistic look */}
                     <div className="relative max-w-sm mx-auto drop-shadow-2xl hover:scale-[1.02] transition-transform duration-300">
                         <div className="bg-white rounded-3xl overflow-hidden border border-beige-300">
+                            {/* Ticket Header */}
                             <div className="bg-coffee-dark p-6 flex justify-between items-center text-beige-100">
                                 <span className="font-serif text-xl">General Pass</span>
                                 <span className="font-mono text-sm opacity-60">NO. 00154</span>
                             </div>
 
                             <div className="p-8 space-y-6 relative">
-                                {/* Scalloped edge */}
+                                {/* Scalloped edge decorative element */}
                                 <div
                                     className="absolute top-0 left-0 w-full h-2 rotate-180"
                                     style={{
@@ -36,10 +45,11 @@ export function RegistroSection() {
                                     }}
                                 />
 
-                                {/* Cutouts */}
+                                {/* Side Cutouts: Enhances the physical ticket aesthetic */}
                                 <div className="absolute top-1/2 -left-3 w-6 h-6 bg-beige-100 rounded-full border-r border-beige-300" />
                                 <div className="absolute top-1/2 -right-3 w-6 h-6 bg-beige-100 rounded-full border-l border-beige-300" />
 
+                                {/* Event Logistics (Date and Time) */}
                                 <div className="flex justify-between items-end border-b border-dashed border-beige-300 pb-6">
                                     <div>
                                         <p className="text-xs font-bold uppercase text-coffee-medium mb-1">Fecha</p>
@@ -51,6 +61,7 @@ export function RegistroSection() {
                                     </div>
                                 </div>
 
+                                {/* Features List */}
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3 text-coffee-dark text-sm">
                                         <Check className="text-coffee-light w-4 h-4" />
@@ -62,6 +73,7 @@ export function RegistroSection() {
                                     </div>
                                 </div>
 
+                                {/* Pricing and Checkout Action */}
                                 <div className="pt-2">
                                     <div className="flex justify-between items-center mb-4">
                                         <span className="text-coffee-medium font-medium text-sm">Total</span>

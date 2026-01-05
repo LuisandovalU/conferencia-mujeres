@@ -2,12 +2,18 @@
 'use client'
 import React from 'react'
 
-export default function LocationSection(): JSX.Element {
+/**
+ * LocationSection component that displays information about the event venue.
+ * Includes address details and a placeholder for a Google Maps integration.
+ * 
+ * @returns {JSX.Element} The rendered location section.
+ */
+export default function LocationSection() {
     return (
-        // CAMBIO: Se pinta con el fondo CLARO para contrastar con la sección anterior
+        /* Uses clear background color to contrast with the previous section */
         <section className="bg-[var(--color-fondo)] py-20 px-4 text-[var(--color-texto)]">
             <div className="grid gap-10 md:grid-cols-2 max-w-6xl mx-auto">
-                {/* Columna 1: Detalles del Evento */}
+                {/* Column 1: Event Details (Venue name and address info) */}
                 <div className="order-2 md:order-1">
                     <h2 id="ubicacion-title" className="text-4xl md:text-5xl font-serif mb-4 text-[var(--color-texto)]">
                         Un Lugar Excepcional
@@ -17,6 +23,7 @@ export default function LocationSection(): JSX.Element {
                     </h3>
 
                     <div className="space-y-4">
+                        {/* Address Card */}
                         <div className="flex items-start gap-4 p-4 rounded-lg border border-[var(--color-texto)]/20">
                             <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[var(--color-acento-dorado)]/20 text-[var(--color-acento-dorado)] text-lg">
                                 📍
@@ -27,6 +34,7 @@ export default function LocationSection(): JSX.Element {
                             </div>
                         </div>
 
+                        {/* Entrance/Parking Card */}
                         <div className="flex items-start gap-4 p-4 rounded-lg border border-[var(--color-texto)]/20">
                             <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[var(--color-acento-dorado)]/20 text-[var(--color-acento-dorado)] text-lg">
                                 🅿️
@@ -40,7 +48,7 @@ export default function LocationSection(): JSX.Element {
                     </div>
                 </div>
 
-                {/* Columna 2: Mapa (placeholder con fondo oscuro sutil) */}
+                {/* Column 2: Map Placeholder (Visual container for Google Maps) */}
                 <div className="order-1 md:order-2 mt-8 md:mt-0">
                     <div
                         role="img"

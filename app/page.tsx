@@ -1,17 +1,26 @@
+import dynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
-import { ConceptoSection } from "@/components/concepto-section"
-import { SpeakersSection } from "@/components/speakers-section"
-import { AgendaSection } from "@/components/agenda-section"
-import { TestimoniosSection } from "@/components/testimonios-section"
-import { ExperienciaSection } from "@/components/experiencia-section"
-import { RegistroSection } from "@/components/registro-section"
-import { Footer } from "@/components/footer"
 
+// Lazy load below-the-fold components for better initial load performance
+const ConceptoSection = dynamic(() => import("@/components/concepto-section").then((mod) => mod.ConceptoSection))
+const SpeakersSection = dynamic(() => import("@/components/speakers-section").then((mod) => mod.SpeakersSection))
+const AgendaSection = dynamic(() => import("@/components/agenda-section").then((mod) => mod.AgendaSection))
+const TestimoniosSection = dynamic(() => import("@/components/testimonios-section").then((mod) => mod.TestimoniosSection))
+const ExperienciaSection = dynamic(() => import("@/components/experiencia-section").then((mod) => mod.ExperienciaSection))
+const RegistroSection = dynamic(() => import("@/components/registro-section").then((mod) => mod.RegistroSection))
+const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer))
+
+/**
+ * Home page component that serves as the main landing page.
+ * Orchestrates the rendering of various sections of the conference website.
+ * 
+ * @returns {JSX.Element} The rendered home page functionality.
+ */
 export default function Home() {
     return (
         <main className="bg-beige-100 text-coffee-dark font-sans selection:bg-coffee-light selection:text-white relative">
-            {/* Texture Overlay */}
+            {/* Texture Overlay: Adds a subtle noise effect to the entire page */}
             <div
                 className="fixed inset-0 opacity-[0.03] pointer-events-none z-[60] mix-blend-multiply"
                 style={{
@@ -19,8 +28,11 @@ export default function Home() {
                 }}
             />
 
+            {/* Core page sections */}
             <Navigation />
             <HeroSection />
+
+            {/* Below-the-fold sections are lazy loaded */}
             <ConceptoSection />
             <SpeakersSection />
             <AgendaSection />

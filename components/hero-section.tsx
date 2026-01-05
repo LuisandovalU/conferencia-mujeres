@@ -1,28 +1,35 @@
 import { ArrowDown } from "lucide-react"
 
+/**
+ * HeroSection component serving as the primary entry point of the website.
+ * Features a large typography-based title, date info, and decorative SVG waves.
+ * 
+ * @returns {JSX.Element} The rendered hero section.
+ */
 export function HeroSection() {
     return (
         <header className="min-h-screen flex flex-col overflow-hidden pt-20 relative items-center justify-center">
+            {/* Main Content Container: Centered vertically and horizontally */}
             <div className="z-10 -mt-20 text-center max-w-5xl mr-auto ml-auto pr-4 pl-4 relative space-y-4">
-                {/* Top Label */}
+                {/* Top Label: Identifying the event year */}
                 <p className="font-serif italic text-coffee-light text-xl md:text-2xl animate-fade-up">
                     conferencia de mujeres 2025
                 </p>
 
-                {/* Main Title */}
+                {/* Main Branding Title */}
                 <h1 className="flex flex-col items-center justify-center font-serif text-coffee-dark leading-[0.9] tracking-tight animate-fade-up [animation-delay:100ms]">
                     <span className="text-[5rem] md:text-[8rem] lg:text-[10rem]">Cuando estoy</span>
                     <span className="text-[5rem] md:text-[8rem] lg:text-[10rem] italic text-coffee-light -mt-2 md:-mt-6">
-            contigo
-          </span>
+                        contigo
+                    </span>
                 </h1>
 
-                {/* Subtitle */}
+                {/* Scripture Reference */}
                 <p className="text-coffee-dark/60 md:text-xl animate-fade-up [animation-delay:200ms] text-lg font-light tracking-wide mt-6">
                     Salmo 73: 25-26
                 </p>
 
-                {/* Pill Button / Date */}
+                {/* Event Schedule Badge */}
                 <div className="pt-8 animate-fade-up [animation-delay:300ms]">
                     <div className="inline-flex items-center bg-coffee-dark text-beige-100 px-8 py-3 rounded-full shadow-lg shadow-coffee-dark/10 hover:scale-105 transition-transform duration-300 cursor-default">
                         <span className="text-xs font-bold tracking-widest uppercase">Nov 23 • 3:30 PM</span>
@@ -30,7 +37,7 @@ export function HeroSection() {
                 </div>
             </div>
 
-            {/* Mountains / Waves Layer */}
+            {/* Background Decorative Layer: Multi-layered SVG waves for depth */}
             <div className="absolute bottom-0 left-0 w-full leading-[0] z-0">
                 <svg
                     className="w-full h-auto min-h-[200px] md:min-h-[350px]"
@@ -68,7 +75,7 @@ export function HeroSection() {
                 </svg>
             </div>
 
-            {/* Arrow Down Indicator */}
+            {/* Animated Scroll Indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-beige-100 opacity-60 animate-bounce">
                 <ArrowDown className="w-6 h-6" />
             </div>

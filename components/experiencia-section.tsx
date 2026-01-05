@@ -1,82 +1,61 @@
-import { ShoppingBag, Coffee, ArrowUpRight, Camera, Users } from "lucide-react"
+import { Gift, Coffee, Camera, Users } from "lucide-react"
 
+/**
+ * ExperienciaSection component that showcases the event's "assets and vibe".
+ * Features a bento-style grid of cards, each representing a unique aspect of the conference.
+ * 
+ * @returns {JSX.Element} The rendered experience section.
+ */
 export function ExperienciaSection() {
     return (
-        <section id="experiencia" className="py-24 bg-coffee-dark text-beige-100 relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-6 relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-6">
-                    <div>
-                        <span className="text-coffee-light font-bold text-xs tracking-widest uppercase">The Experience</span>
-                        <h3 className="font-serif text-5xl text-beige-50 mt-2">
-                            Assets <span className="italic text-coffee-light">&amp;</span> Vibe
-                        </h3>
-                    </div>
+        <section id="experiencia" className="py-24 bg-white relative">
+            <div className="max-w-6xl mx-auto px-6">
+                {/* Section Header: Explaining the "vibe" and what to expect */}
+                <div className="max-w-2xl mb-16">
+                    <h2 className="font-serif text-5xl md:text-6xl text-coffee-dark mb-6 tracking-tight">
+                        Vivir la <span className="italic text-coffee-light">Experiencia</span>
+                    </h2>
+                    <p className="text-coffee-dark/60 text-lg font-light leading-relaxed">
+                        Cada detalle ha sido diseñado para que tu única preocupación sea estar presente.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
-                    {/* Card Grande 1: Kit */}
-                    <div className="md:col-span-2 md:row-span-2 bg-beige-100 text-coffee-dark rounded-3xl p-1 relative overflow-hidden group">
-                        <div className="relative h-full w-full bg-white rounded-[1.2rem] p-8 flex flex-col justify-between overflow-hidden border border-beige-200 min-h-[400px]">
-                            <div className="flex justify-between items-start">
-                                <h4 className="font-serif text-3xl">Welcome Kit</h4>
-                                <ShoppingBag className="text-coffee-medium w-6 h-6" />
-                            </div>
-                            <div className="absolute bottom-0 right-0 w-3/4 h-3/4 translate-x-4 translate-y-4">
-                                <img
-                                    src="/kit-bienvenida.jpg"
-                                    alt="Welcome Kit"
-                                    className="object-cover w-full h-full rounded-tl-3xl grayscale group-hover:grayscale-0 transition-all duration-700 shadow-xl sepia-[.2]"
-                                />
-                            </div>
-                            <div className="relative z-10 mt-auto">
-                <span className="text-xs font-bold uppercase tracking-wider border border-beige-200 px-2 py-1 rounded bg-white text-coffee-medium">
-                  Incluido
-                </span>
-                            </div>
+                {/* Grid Layout: Bento-style grid for visual variety */}
+                <div className="grid md:grid-cols-4 gap-4 auto-rows-[250px]">
+                    {/* Welcome Kit Card: Emphasizes the physical gift aspect */}
+                    <div className="md:col-span-2 md:row-span-2 bg-beige-100 rounded-[2.5rem] p-10 flex flex-col justify-between group overflow-hidden relative">
+                        <div className="relative z-10 transition-transform duration-500 group-hover:-translate-y-2">
+                            <span className="text-coffee-medium font-bold text-xs tracking-widest uppercase mb-4 block">01</span>
+                            <h3 className="font-serif text-4xl text-coffee-dark mb-4">Welcome Kit</h3>
+                            <p className="text-coffee-dark/60 font-light max-w-[200px]">
+                                Un detalle tangible para acompañar tu proceso de transformación.
+                            </p>
+                        </div>
+                        <div className="absolute top-10 right-10 opacity-20 group-hover:opacity-40 transition-opacity">
+                            <Gift className="w-24 h-24" />
                         </div>
                     </div>
 
-                    {/* Card 2: Coffee */}
-                    <div className="md:col-span-2 md:row-span-1 bg-coffee-medium rounded-3xl p-6 flex items-center justify-between group hover:bg-coffee-light transition-colors text-white relative overflow-hidden">
-                        <div className="absolute -right-4 -top-4 opacity-10 rotate-12">
-                            <Coffee className="w-32 h-32" />
+                    {/* Coffee/Gastronomy Card: Small square card */}
+                    <div className="md:col-span-2 bg-beige-200 rounded-[2.5rem] p-10 flex items-center justify-between group hover:bg-coffee-dark hover:text-white transition-all duration-500">
+                        <div className="transition-transform duration-500 group-hover:translate-x-2">
+                            <h3 className="font-serif text-3xl">Coffee & Food</h3>
+                            <p className="text-sm opacity-60 font-light">Especialmente curado para ti.</p>
                         </div>
-                        <div className="relative z-10 space-y-2">
-                            <h4 className="font-serif text-2xl">Specialty Coffee</h4>
-                            <p className="text-sm text-white/80 max-w-[200px]">Baristas ilimitados durante todo el evento.</p>
-                        </div>
-                        <div className="relative z-10 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                            <ArrowUpRight className="w-5 h-5" />
-                        </div>
+                        <Coffee className="w-12 h-12 opacity-40 group-hover:opacity-100 group-hover:rotate-12 transition-all" />
                     </div>
 
-                    {/* Card 3: Photo */}
-                    <div className="md:col-span-1 md:row-span-1 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 transition-colors min-h-[150px]">
-                        <div className="w-8 h-8 rounded-full bg-beige-50/10 flex items-center justify-center">
-                            <Camera className="text-beige-100 w-4 h-4" />
-                        </div>
-                        <div>
-                            <h4 className="font-serif text-xl text-beige-50">Photo Spots</h4>
-                            <p className="text-xs text-beige-200/70 mt-1">#CoquetteVibes</p>
-                        </div>
+                    {/* Photo Spots Card: Visual/Social aspect */}
+                    <div className="bg-beige-50 border border-beige-200 rounded-[2.5rem] p-10 flex flex-col justify-end group transition-colors hover:border-coffee-light">
+                        <Camera className="w-10 h-10 text-coffee-light mb-6 group-hover:scale-110 transition-transform" />
+                        <h3 className="font-serif text-xl text-coffee-dark">Photo Spots</h3>
                     </div>
 
-                    {/* Card 4: Connection */}
-                    <div className="md:col-span-1 md:row-span-1 bg-coffee-darker border border-white/10 rounded-3xl p-6 flex flex-col justify-between group overflow-hidden relative min-h-[150px]">
-                        <div
-                            className="absolute inset-0 w-full h-full"
-                            style={{
-                                backgroundImage:
-                                    "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)",
-                            }}
-                        />
-                        <div className="relative z-10 w-8 h-8 rounded-full bg-coffee-light flex items-center justify-center">
-                            <Users className="text-white w-4 h-4" />
-                        </div>
-                        <div className="relative z-10">
-                            <h4 className="font-serif text-xl text-beige-50">Community</h4>
-                            <p className="text-xs text-beige-100/80 mt-1">Conecta.</p>
-                        </div>
+                    {/* Community Connection Card: Abstract/Social value */}
+                    <div className="bg-coffee-dark text-white rounded-[2.5rem] p-10 flex flex-col justify-end relative overflow-hidden group">
+                        <Users className="absolute -top-4 -right-4 w-32 h-32 opacity-10 group-hover:scale-110 transition-transform duration-700" />
+                        <h3 className="font-serif text-xl relative z-10">Comunidad</h3>
+                        <p className="text-xs text-white/60 font-light mt-2 relative z-10">Conecta con otras mujeres.</p>
                     </div>
                 </div>
             </div>
