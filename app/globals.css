@@ -117,6 +117,9 @@
 
     /* Animations */
     --animate-fade-up: fadeUp 0.8s ease-out forwards;
+    --animate-fade-left: fadeLeft 1s ease-out forwards;
+    --animate-fade-right: fadeRight 1s ease-out forwards;
+    --animate-fade-in: fadeIn 1.2s ease-out forwards;
     --animate-float: float 6s ease-in-out infinite;
 
     @keyframes fadeUp {
@@ -130,13 +133,34 @@
         }
     }
 
-    @keyframes float {
-        0%,
-        100% {
-            transform: translateY(0);
+    @keyframes fadeLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(30px);
         }
-        50% {
-            transform: translateY(-10px);
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeRight {
+        0% {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
         }
     }
 }

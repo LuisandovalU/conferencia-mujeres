@@ -1,17 +1,17 @@
 import Link from "next/link"
 
 /**
- * Navigation component that provides a sticky header with links to different sections.
- * Features a backdrop blur effect and responsive design.
+ * Componente de Navegación que proporciona una cabecera fija con enlaces a diferentes secciones.
+ * Incluye un efecto de desenfoque de fondo (backdrop blur) y un diseño responsivo.
  * 
- * @returns {JSX.Element} The rendered navigation bar.
+ * @returns {JSX.Element} La barra de navegación renderizada.
  */
 export function Navigation() {
     return (
-        /* Sticky navigation with blur effect for better readability on scroll */
+        /* Navegación pegajosa con efecto de desenfoque para mejorar la legibilidad al hacer scroll */
         <nav className="fixed top-0 w-full z-50 transition-all duration-300 bg-beige-100/80 backdrop-blur-sm border-b border-coffee-dark/5">
             <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-                {/* Brand Logo/Link */}
+                {/* Logo de la Marca / Enlace Inicial */}
                 <Link
                     href="#"
                     className="font-serif text-2xl tracking-tighter text-coffee-dark hover:opacity-70 transition-opacity flex items-center gap-1"
@@ -21,7 +21,7 @@ export function Navigation() {
                     </span>
                 </Link>
 
-                {/* Desktop Navigation Links */}
+                {/* Enlaces de Navegación para Escritorio */}
                 <div className="hidden md:flex items-center space-x-6">
                     <Link
                         href="#concepto"
@@ -43,7 +43,7 @@ export function Navigation() {
                     </Link>
                 </div>
 
-                {/* CTA Reservation Button */}
+                {/* Botón de Llamada a la Acción (CTA) para Reservas */}
                 <Link
                     href="#registro"
                     className="hidden md:inline-flex border border-coffee-dark/20 bg-transparent text-coffee-dark px-6 py-2 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 hover:bg-coffee-dark hover:text-white hover:border-coffee-dark"

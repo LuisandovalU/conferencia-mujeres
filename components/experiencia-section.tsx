@@ -1,17 +1,17 @@
 import { Gift, Coffee, Camera, Users } from "lucide-react"
 
 /**
- * ExperienciaSection component that showcases the event's "assets and vibe".
- * Features a bento-style grid of cards, each representing a unique aspect of the conference.
+ * Componente ExperienciaSection que muestra los "activos y el ambiente" del evento.
+ * Presenta una cuadrícula estilo bento de tarjetas, cada una representando un aspecto único de la conferencia.
  * 
- * @returns {JSX.Element} The rendered experience section.
+ * @returns {JSX.Element} La sección de experiencia renderizada.
  */
 export function ExperienciaSection() {
     return (
-        <section id="experiencia" className="py-24 bg-white relative">
+        <section id="experiencia" className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-6xl mx-auto px-6">
-                {/* Section Header: Explaining the "vibe" and what to expect */}
-                <div className="max-w-2xl mb-16">
+                {/* Cabecera de la Sección: Explica el "ambiente" y qué esperar */}
+                <div className="max-w-2xl mb-16 animate-fade-up">
                     <h2 className="font-serif text-5xl md:text-6xl text-coffee-dark mb-6 tracking-tight">
                         Vivir la <span className="italic text-coffee-light">Experiencia</span>
                     </h2>
@@ -20,10 +20,10 @@ export function ExperienciaSection() {
                     </p>
                 </div>
 
-                {/* Grid Layout: Bento-style grid for visual variety */}
+                {/* Diseño de Cuadrícula: Cuadrícula estilo bento para variedad visual */}
                 <div className="grid md:grid-cols-4 gap-4 auto-rows-[250px]">
-                    {/* Welcome Kit Card: Emphasizes the physical gift aspect */}
-                    <div className="md:col-span-2 md:row-span-2 bg-beige-100 rounded-[2.5rem] p-10 flex flex-col justify-between group overflow-hidden relative">
+                    {/* Tarjeta de Kit de Bienvenida: Enfatiza el aspecto del regalo físico */}
+                    <div className="md:col-span-2 md:row-span-2 bg-beige-100 rounded-[2.5rem] p-10 flex flex-col justify-between group overflow-hidden relative animate-fade-up">
                         <div className="relative z-10 transition-transform duration-500 group-hover:-translate-y-2">
                             <span className="text-coffee-medium font-bold text-xs tracking-widest uppercase mb-4 block">01</span>
                             <h3 className="font-serif text-4xl text-coffee-dark mb-4">Welcome Kit</h3>
@@ -36,8 +36,8 @@ export function ExperienciaSection() {
                         </div>
                     </div>
 
-                    {/* Coffee/Gastronomy Card: Small square card */}
-                    <div className="md:col-span-2 bg-beige-200 rounded-[2.5rem] p-10 flex items-center justify-between group hover:bg-coffee-dark hover:text-white transition-all duration-500">
+                    {/* Tarjeta de Café/Gastronomía: Tarjeta cuadrada pequeña */}
+                    <div className="md:col-span-2 bg-beige-200 rounded-[2.5rem] p-10 flex items-center justify-between group hover:bg-coffee-dark hover:text-white transition-all duration-500 animate-fade-up" style={{ animationDelay: '100ms' }}>
                         <div className="transition-transform duration-500 group-hover:translate-x-2">
                             <h3 className="font-serif text-3xl">Coffee & Food</h3>
                             <p className="text-sm opacity-60 font-light">Especialmente curado para ti.</p>
@@ -45,14 +45,14 @@ export function ExperienciaSection() {
                         <Coffee className="w-12 h-12 opacity-40 group-hover:opacity-100 group-hover:rotate-12 transition-all" />
                     </div>
 
-                    {/* Photo Spots Card: Visual/Social aspect */}
-                    <div className="bg-beige-50 border border-beige-200 rounded-[2.5rem] p-10 flex flex-col justify-end group transition-colors hover:border-coffee-light">
+                    {/* Tarjeta de Puntos Fotográficos: Aspecto visual/social */}
+                    <div className="bg-beige-50 border border-beige-200 rounded-[2.5rem] p-10 flex flex-col justify-end group transition-colors hover:border-coffee-light animate-fade-up" style={{ animationDelay: '200ms' }}>
                         <Camera className="w-10 h-10 text-coffee-light mb-6 group-hover:scale-110 transition-transform" />
                         <h3 className="font-serif text-xl text-coffee-dark">Photo Spots</h3>
                     </div>
 
-                    {/* Community Connection Card: Abstract/Social value */}
-                    <div className="bg-coffee-dark text-white rounded-[2.5rem] p-10 flex flex-col justify-end relative overflow-hidden group">
+                    {/* Tarjeta de Conexión Comunitaria: Valor abstracto/social */}
+                    <div className="bg-coffee-dark text-white rounded-[2.5rem] p-10 flex flex-col justify-end relative overflow-hidden group animate-fade-up" style={{ animationDelay: '300ms' }}>
                         <Users className="absolute -top-4 -right-4 w-32 h-32 opacity-10 group-hover:scale-110 transition-transform duration-700" />
                         <h3 className="font-serif text-xl relative z-10">Comunidad</h3>
                         <p className="text-xs text-white/60 font-light mt-2 relative z-10">Conecta con otras mujeres.</p>

@@ -2,25 +2,40 @@ import dynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 
-// Lazy load below-the-fold components for better initial load performance
-const ConceptoSection = dynamic(() => import("@/components/concepto-section").then((mod) => mod.ConceptoSection))
-const SpeakersSection = dynamic(() => import("@/components/speakers-section").then((mod) => mod.SpeakersSection))
-const AgendaSection = dynamic(() => import("@/components/agenda-section").then((mod) => mod.AgendaSection))
-const TestimoniosSection = dynamic(() => import("@/components/testimonios-section").then((mod) => mod.TestimoniosSection))
-const ExperienciaSection = dynamic(() => import("@/components/experiencia-section").then((mod) => mod.ExperienciaSection))
-const RegistroSection = dynamic(() => import("@/components/registro-section").then((mod) => mod.RegistroSection))
+// Carga diferida (Lazy loading) de componentes debajo del primer pantallazo (fold) para mejorar el rendimiento inicial
+const ConceptoSection = dynamic(() => import("@/components/concepto-section").then((mod) => mod.ConceptoSection), {
+    loading: () => <div className="h-96 bg-beige-50 animate-pulse" />
+})
+const SpeakersSection = dynamic(() => import("@/components/speakers-section").then((mod) => mod.SpeakersSection), {
+    loading: () => <div className="h-96 bg-beige-100 animate-pulse" />
+})
+const AgendaSection = dynamic(() => import("@/components/agenda-section").then((mod) => mod.AgendaSection), {
+    loading: () => <div className="h-96 bg-beige-50 animate-pulse" />
+})
+const TestimoniosSection = dynamic(() => import("@/components/testimonios-section").then((mod) => mod.TestimoniosSection), {
+    loading: () => <div className="h-96 bg-beige-100 animate-pulse" />
+})
+const ExperienciaSection = dynamic(() => import("@/components/experiencia-section").then((mod) => mod.ExperienciaSection), {
+    loading: () => <div className="h-96 bg-beige-50 animate-pulse" />
+})
+const RegistroSection = dynamic(() => import("@/components/registro-section").then((mod) => mod.RegistroSection), {
+    loading: () => <div className="h-96 bg-beige-100 animate-pulse" />
+})
+const LocationSection = dynamic(() => import("./LocationSection"), {
+    loading: () => <div className="h-96 bg-beige-50 animate-pulse" />
+})
 const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer))
 
 /**
- * Home page component that serves as the main landing page.
- * Orchestrates the rendering of various sections of the conference website.
+ * Página principal que sirve como el punto de entrada principal del sitio.
+ * Orquesta el renderizado de las diversas secciones del sitio web de la conferencia.
  * 
- * @returns {JSX.Element} The rendered home page functionality.
+ * @returns {JSX.Element} La funcionalidad de la página de inicio renderizada.
  */
 export default function Home() {
     return (
         <main className="bg-beige-100 text-coffee-dark font-sans selection:bg-coffee-light selection:text-white relative">
-            {/* Texture Overlay: Adds a subtle noise effect to the entire page */}
+            {/* Superposición de Textura: Añade un efecto sutil de ruido a toda la página para una estética premium */}
             <div
                 className="fixed inset-0 opacity-[0.03] pointer-events-none z-[60] mix-blend-multiply"
                 style={{
@@ -28,17 +43,18 @@ export default function Home() {
                 }}
             />
 
-            {/* Core page sections */}
+            {/* Secciones principales de la página */}
             <Navigation />
             <HeroSection />
 
-            {/* Below-the-fold sections are lazy loaded */}
+            {/* Las secciones debajo del fold se cargan bajo demanda para optimizar el LCP (Largest Contentful Paint) */}
             <ConceptoSection />
             <SpeakersSection />
             <AgendaSection />
             <TestimoniosSection />
             <ExperienciaSection />
             <RegistroSection />
+            <LocationSection />
             <Footer />
         </main>
     )

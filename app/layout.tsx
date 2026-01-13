@@ -29,12 +29,12 @@ export const metadata: Metadata = {
 
 
 /**
- * RootLayout component that wraps the entire application.
- * Defines global fonts, metadata, and structural elements like the HTML and Body tags.
+ * Componente RootLayout que envuelve toda la aplicación.
+ * Define las fuentes globales, metadatos y elementos estructurales como las etiquetas HTML y Body.
  * 
- * @param {Object} props - Component properties.
- * @param {React.ReactNode} props.children - Child components to be rendered within the layout.
- * @returns {JSX.Element} The root HTML structure of the application.
+ * @param {Object} props - Propiedades del componente.
+ * @param {React.ReactNode} props.children - Componentes hijos que se renderizarán dentro del diseño.
+ * @returns {JSX.Element} La estructura HTML raíz de la aplicación.
  */
 export default function RootLayout({
     children,
@@ -43,10 +43,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="es" className="scroll-smooth">
-            {/* Inject font variables and apply base styles */}
+            {/* Inyecta las variables de fuente y aplica los estilos base */}
             <body className={`${inter.variable} ${dmSerif.variable} ${geistMono.variable} font-sans antialiased`}>
                 {children}
-                {/* Vercel Analytics for tracking page views and performance */}
+                {/* Vercel Analytics para el seguimiento de vistas de página y rendimiento */}
                 <Analytics />
             </body>
         </html>
