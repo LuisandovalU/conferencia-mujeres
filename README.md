@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+  # CONFERENCIA MUJERES 2024 | WEB CONCEPT
+  
+  <img src="https://img.shields.io/badge/Status-Development-blue?style=for-the-badge" alt="Status" />
+  <img src="https://img.shields.io/badge/Version-1.0.0-lightgrey?style=for-the-badge" alt="Version" />
+  
+  <br />
+  
+  <img src="./assets/preview.png" alt="Vista Previa" width="100%" style="border-radius: 10px;" />
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <br />
+  <br />
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  <a href="https://github.com/LuisandovalU/conferencia-mujeres">
+    <img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github" alt="Repo Link" />
+  </a>
+  <a href="https://conferencia-mujeres.vercel.app/">
+    <img src="https://img.shields.io/badge/Demo-Live_View-000000?style=for-the-badge&logo=vercel" alt="Live View" />
+  </a>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+</div>
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ∎ Descripción del Proyecto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este repositorio aloja el código fuente de una plataforma web diseñada como concepto oficial para la "Conferencia de Mujeres 2024". El objetivo principal de este desarrollo fue la transición técnica desde el desarrollo web tradicional (HTML/CSS/JS) hacia arquitecturas modernas basadas en componentes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El proyecto se centra en la **limpieza visual**, la **experiencia de usuario (UX)** y la presentación profesional de eventos masivos, demostrando cómo la tecnología puede elevar la identidad de una organización.
 
-## Deploy on Vercel
+## ∎ Arquitectura y Tecnologías
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+El desarrollo se fundamenta en un stack moderno para asegurar rendimiento y escalabilidad:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Componente | Tecnología | Propósito |
+| :--- | :--- | :--- |
+| **Core** | <img src="https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB" /> | Construcción de interfaz basada en componentes. |
+| **Framework** | <img src="https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js&logoColor=white" /> | Renderizado optimizado y enrutamiento. |
+| **Estilos** | <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" /> | Diseño responsivo y estética personalizada. |
+| **Control** | <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white" /> | Gestión de versiones. |
+
+## ∎ Objetivos de Aprendizaje
+
+Este proyecto marca un hito en mi ruta de ingeniería de software, enfocándome en:
+
+* **Migración Tecnológica:** Evolución de Vanilla JS a React/Next.js.
+* **Componentización:** Creación de elementos reutilizables y modulares.
+* **Diseño UI/UX:** Implementación de interfaces limpias, legibles y atractivas sin sobrecarga visual.
+* **Presentación de Eventos:** Estructuración de información clave para conferencias (hero section, speakers, agenda).
+
+## ∎ Instalación y Despliegue
+
+Si deseas ejecutar este proyecto en un entorno local:
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/LuisandovalU/conferencia-mujeres.git](https://github.com/LuisandovalU/conferencia-mujeres.git)
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    cd conferencia-mujeres
+    npm install
+    ```
+
+3.  **Ejecutar servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Visualizar:**
+    Abre tu navegador en `http://localhost:3000`.
+
+## ∎ Roadmap y Futuro
+
+Este proyecto es una base sólida sobre la cual planeo iterar. Las próximas actualizaciones contemplan:
+
+* [ ] Integración de Backend para registro de usuarios.
+* [ ] Base de datos para gestión dinámica de horarios y ponentes.
+* [ ] Implementación de pasarela de pagos (simulación).
+* [ ] Optimización SEO avanzada.
+
+---
+
+<div align="center">
+  
+  **Desarrollado por Luis Alberto Sandoval**
+  
+  <a href="https://github.com/LuisandovalU">
+    <img src="https://img.shields.io/badge/Perfil-GitHub-black?style=flat-square&logo=github" />
+  </a>
+  <a href="https://linkedin.com/in/tu-usuario">
+    <img src="https://img.shields.io/badge/Conectar-LinkedIn-blue?style=flat-square&logo=linkedin" />
+  </a>
+
+</div>
