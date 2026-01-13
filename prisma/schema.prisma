@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+/**
+ * Generador del Cliente: Prisma utiliza esto para generar un cliente de base de datos
+ * con seguridad de tipos (Typescript) personalizado según nuestro modelo.
+ * Se usa 'prisma-client-js' para la compatibilidad estándar de Node.js/Next.js.
+ */
+generator client {
+  provider = "prisma-client-js"
+}
+
+/**
+ * Fuente de Datos: Define el motor de base de datos.
+ * Usamos PostgreSQL (vía Supabase) por su confiabilidad y escalabilidad.
+ * Nota: La URL de conexión se gestiona en prisma.config.ts por requisitos de Prisma 7.
+ */
+datasource db {
+  provider = "postgresql"
+}
+
+/**
+ * Modelo de Registro (Registration):
+ * Representa a una asistente inscrita en la conferencia.
+ * 
+ * Atributos clave:
+ * - id: Identificador único autogenerado (CUID) para evitar IDs secuenciales predecibles.
+ * - email: Único, para asegurar que una persona no se registre dos veces con el mismo correo.
+ * - status: Maneja el ciclo de vida del pago (Pendiente, Pagado, Cancelado).
+ * - @@map: Renombra la tabla en la base de datos a plural por convención estándar.
+ */
+model Registration {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  phone     String?
+  status    String   @default("PENDING") // PENDING, PAID, CANCELLED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("registrations")
+}
